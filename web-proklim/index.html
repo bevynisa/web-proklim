@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ProKlim Desa Sanggang</title>
+  <meta name="description" content="Website Program Kampung Iklim (ProKlim) Desa Sanggang, Kecamatan Bulu, Kabupaten Sukoharjo. Adaptasi, mitigasi, kelembagaan, artikel, dan galeri kegiatan.">
+  <link rel="icon" href="assets/img/logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css?v=144">
+</head>
+<body>
+
+  <header class="situs-header" id="situs-header"></header>
+
+  <main id="isi-utama"></main>
+
+  <footer class="situs-footer" id="situs-footer"></footer>
+
+  <!-- Tampilan foto ukuran besar -->
+  <div class="lightbox" id="lightbox">
+    <button class="tutup" id="lb-tutup" aria-label="Tutup">×</button>
+    <button class="navigasi kiri" id="lb-kiri" aria-label="Sebelumnya">‹</button>
+    <button class="navigasi kanan" id="lb-kanan" aria-label="Berikutnya">›</button>
+    <div>
+      <img src="" alt="Foto kegiatan ProKlim">
+      <div class="info"></div>
+    </div>
+  </div>
+
+  <!-- Tampilan video ukuran besar -->
+  <div class="lightbox lightbox-video" id="lightbox-video">
+    <button class="tutup" id="lbv-tutup" aria-label="Tutup">×</button>
+    <button class="navigasi kiri" id="lbv-kiri" aria-label="Video sebelumnya">‹</button>
+    <button class="navigasi kanan" id="lbv-kanan" aria-label="Video berikutnya">›</button>
+    <div class="lbv-bingkai">
+      <div id="lbv-media"></div>
+      <div class="info" id="lbv-info"></div>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="assets/js/config.js?v=146"></script>
+  <script src="assets/js/store.js?v=146"></script>
+  <script src="assets/js/render.js?v=146"></script>
+  <script src="assets/js/app.js?v=146"></script>
+</body>
+</html>
