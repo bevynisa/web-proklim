@@ -31,10 +31,6 @@
       '<input type="text" id="situs-jargon" value="' + esc(s.jargon || "") + '">' +
       '<p class="hint">Kalimat pendek di bawah nama website. Contoh: "Sanggang Berkreasi"</p></div>' +
 
-      '<div class="field"><label for="situs-lembaga">Nama Lembaga</label>' +
-      '<input type="text" id="situs-lembaga" value="' + esc(s.lembaga || "") + '">' +
-      '<p class="hint">Nama resmi lembaga pelaksana, tampil di footer.</p></div>' +
-
       '<div class="field"><label for="situs-alamat">Alamat</label>' +
       '<input type="text" id="situs-alamat" value="' + esc(s.alamat || "") + '">' +
       '<p class="hint">Alamat lengkap desa, tampil di footer.</p></div>' +
@@ -46,6 +42,10 @@
       '<div class="field"><label for="situs-tentang">Deskripsi Singkat Footer</label>' +
       '<textarea id="situs-tentang" style="min-height:90px">' + esc(s.tentang_singkat || "") + "</textarea>" +
       '<p class="hint">1–2 kalimat ringkasan program, tampil di bagian bawah setiap halaman.</p></div>' +
+
+      '<div class="field"><label for="situs-footer-teks">Teks Hak Cipta Footer</label>' +
+      '<input type="text" id="situs-footer-teks" value="' + esc(s.footer_teks || "") + '">' +
+      '<p class="hint">Baris paling bawah tiap halaman, ditulis persis apa adanya. Contoh: "© 2026 ProKlim Sanggang Berkreasi, Desa Sanggang, Bulu, Sukoharjo." Kosongkan untuk pakai teks bawaan.</p></div>' +
 
       '<button type="submit" class="tombol tombol-utama">Simpan Perubahan</button>' +
       "</form></div>";
@@ -59,10 +59,10 @@
           logo_url: UI.nilai("situs-logo"),
           nama: UI.nilai("situs-nama"),
           jargon: UI.nilai("situs-jargon"),
-          lembaga: UI.nilai("situs-lembaga"),
           alamat: UI.nilai("situs-alamat"),
           email: UI.nilai("situs-email"),
           tentang_singkat: UI.nilai("situs-tentang"),
+          footer_teks: UI.nilai("situs-footer-teks"),
         });
         UI.pesan("Berhasil disimpan! Perubahan sudah langsung tampil di website.", true);
       } catch (err) {

@@ -131,7 +131,7 @@
         "</div>" +
       "</div>" +
       '<div class="footer-bawah">' +
-        "<span>© " + new Date().getFullYear() + " " + esc(s.lembaga) + ". Desa Sanggang, Bulu, Sukoharjo.</span>" +
+        "<span>" + esc(s.footerTeks || ("© " + new Date().getFullYear() + " Desa Sanggang, Bulu, Sukoharjo.")) + "</span>" +
       "</div></div>";
   };
 

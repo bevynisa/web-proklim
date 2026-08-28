@@ -199,6 +199,7 @@
           alamat: s.alamat || "",
           email: s.email || "",
           tentangSingkat: s.tentang_singkat || "",
+          footerTeks: s.footer_teks || "",
         },
         menu: MENU_TETAP,
         halaman: susunHalaman(kontenR.data || [], strukturBlok),
