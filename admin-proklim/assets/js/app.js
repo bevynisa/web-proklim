@@ -35,7 +35,7 @@
 
   async function mulai() {
     var masuk = await Auth.sedangMasuk();
-    if (!masuk) { window.location.href = "login.html"; return; }
+    if (!masuk) { window.location.href = "/login"; return; }
 
     bangunSidebar();
     pasangUnggahGambarGlobal();

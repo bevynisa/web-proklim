@@ -38,7 +38,7 @@
 <script>
   (async function () {
     if (!window.SupabaseClient.tersambung) document.getElementById("pita-pratinjau").style.display = "";
-    if (await Auth.sedangMasuk()) { window.location.href = "index.html"; return; }
+    if (await Auth.sedangMasuk()) { window.location.href = "/"; return; }
 
     document.getElementById("form-masuk").addEventListener("submit", async function (e) {
       e.preventDefault();
@@ -49,7 +49,7 @@
       tombol.textContent = "Memeriksa...";
       var hasil = await Auth.masuk(document.getElementById("in-email").value.trim(), document.getElementById("in-sandi").value);
       if (hasil.ok) {
-        window.location.href = "index.html";
+        window.location.href = "/";
       } else {
         pesanGagal.textContent = hasil.pesan;
         pesanGagal.style.display = "";

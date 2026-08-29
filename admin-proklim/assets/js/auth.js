@@ -27,7 +27,7 @@
       } else {
         try { sessionStorage.removeItem(KUNCI_DEMO_SESI); } catch (e) {}
       }
-      window.location.href = "login.html";
+      window.location.href = "/login";
     },
 
     async sedangMasuk() {
