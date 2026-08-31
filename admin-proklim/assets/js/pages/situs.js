@@ -31,10 +31,6 @@
       '<input type="text" id="situs-jargon" value="' + esc(s.jargon || "") + '">' +
       '<p class="hint">Kalimat pendek di bawah nama website. Contoh: "Sanggang Berkreasi"</p></div>' +
 
-      '<div class="field"><label for="situs-alamat">Alamat</label>' +
-      '<input type="text" id="situs-alamat" value="' + esc(s.alamat || "") + '">' +
-      '<p class="hint">Alamat lengkap desa, tampil di footer.</p></div>' +
-
       '<div class="field"><label for="situs-email">Email</label>' +
       '<input type="email" id="situs-email" value="' + esc(s.email || "") + '">' +
       '<p class="hint">Email kontak, tampil di footer.</p></div>' +
@@ -68,7 +64,6 @@
           logo_url: UI.nilai("situs-logo"),
           nama: UI.nilai("situs-nama"),
           jargon: UI.nilai("situs-jargon"),
-          alamat: UI.nilai("situs-alamat"),
           email: UI.nilai("situs-email"),
           tentang_singkat: UI.nilai("situs-tentang"),
           footer_teks: UI.nilai("situs-footer-teks"),
