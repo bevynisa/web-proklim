@@ -133,12 +133,12 @@
           "<p>" + esc(s.tentangSingkat) + "</p>" +
         "</div>" +
         "<div><h4>Kontak</h4>" +
-          "<p>" + esc(s.alamat) + "</p>" +
-          (s.email ? '<p><a href="mailto:' + esc(s.email) + '">' + esc(s.email) + "</a></p>" : "") +
           (s.kontakTelepon
             ? '<p><a href="https://wa.me/' + esc(teleponWa(s.kontakTelepon)) + '" target="_blank" rel="noopener">' +
               esc(s.kontakTelepon) + (s.kontakNama ? " (" + esc(s.kontakNama) + ")" : "") + "</a></p>"
             : "") +
+          "<p>" + esc(s.alamat) + "</p>" +
+          (s.email ? '<p><a href="mailto:' + esc(s.email) + '">' + esc(s.email) + "</a></p>" : "") +
         "</div>" +
       "</div>" +
       '<div class="footer-bawah">' +
