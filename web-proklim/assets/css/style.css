@@ -1459,6 +1459,8 @@ table.tabel.polos td:last-child { white-space: normal; font-weight: 500; color: 
 .footer-merek img { height: 50px; }
 .footer-merek .nama { color: #fff; font-weight: 700; font-size: 16px; line-height: 1.2; }
 .footer-merek .jargon { font-size: 12.5px; letter-spacing: .05em; text-transform: uppercase; color: var(--hijau-500); font-weight: 700; }
+.kontak-baris a { display: flex; align-items: center; gap: 10px; }
+.kontak-baris svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--hijau-500); }
 .footer-bawah {
   border-top: 1px solid rgba(255, 255, 255, .12); margin-top: 28px; padding-top: 16px;
   display: flex; flex-wrap: wrap; gap: 10px; justify-content: space-between;

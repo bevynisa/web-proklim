@@ -42,6 +42,13 @@
     return null;
   }
 
+  var IKON_TELEPON_SVG =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M6.6 10.8c1.4 2.8 3.8 5.2 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1L6.6 10.8z"/></svg>';
+  var IKON_EMAIL_SVG =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+    '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
+
   // "0858..." atau "+62858..." -> "62858..." (format yang dipakai tautan wa.me)
   function teleponWa(t) {
     var d = String(t || "").replace(/[^\d]/g, "");
@@ -134,11 +141,12 @@
         "</div>" +
         "<div><h4>Kontak</h4>" +
           (s.kontakTelepon
-            ? '<p><a href="https://wa.me/' + esc(teleponWa(s.kontakTelepon)) + '" target="_blank" rel="noopener">' +
-              esc(s.kontakTelepon) + (s.kontakNama ? " (" + esc(s.kontakNama) + ")" : "") + "</a></p>"
+            ? '<p class="kontak-baris"><a href="https://wa.me/' + esc(teleponWa(s.kontakTelepon)) + '" target="_blank" rel="noopener">' +
+              IKON_TELEPON_SVG + "<span>" + esc(s.kontakTelepon) + (s.kontakNama ? " (" + esc(s.kontakNama) + ")" : "") + "</span></a></p>"
             : "") +
-          "<p>" + esc(s.alamat) + "</p>" +
-          (s.email ? '<p><a href="mailto:' + esc(s.email) + '">' + esc(s.email) + "</a></p>" : "") +
+          (s.email
+            ? '<p class="kontak-baris"><a href="mailto:' + esc(s.email) + '">' + IKON_EMAIL_SVG + "<span>" + esc(s.email) + "</span></a></p>"
+            : "") +
         "</div>" +
       "</div>" +
       '<div class="footer-bawah">' +
