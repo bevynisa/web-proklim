@@ -21,6 +21,8 @@ create table if not exists situs_pengaturan (
   email text,
   tentang_singkat text,
   footer_teks text,
+  kontak_nama text,
+  kontak_telepon text,
   diperbarui_pada timestamptz not null default now()
 );
 insert into situs_pengaturan (id) values (1) on conflict (id) do nothing;

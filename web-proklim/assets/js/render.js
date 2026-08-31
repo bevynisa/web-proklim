@@ -42,6 +42,13 @@
     return null;
   }
 
+  // "0858..." atau "+62858..." -> "62858..." (format yang dipakai tautan wa.me)
+  function teleponWa(t) {
+    var d = String(t || "").replace(/[^\d]/g, "");
+    if (d.charAt(0) === "0") d = "62" + d.slice(1);
+    return d;
+  }
+
   function tglIndo(s) {
     if (!s) return "";
     var b = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli",
@@ -128,6 +135,10 @@
         "<div><h4>Kontak</h4>" +
           "<p>" + esc(s.alamat) + "</p>" +
           (s.email ? '<p><a href="mailto:' + esc(s.email) + '">' + esc(s.email) + "</a></p>" : "") +
+          (s.kontakTelepon
+            ? '<p><a href="https://wa.me/' + esc(teleponWa(s.kontakTelepon)) + '" target="_blank" rel="noopener">' +
+              esc(s.kontakTelepon) + (s.kontakNama ? " (" + esc(s.kontakNama) + ")" : "") + "</a></p>"
+            : "") +
         "</div>" +
       "</div>" +
       '<div class="footer-bawah">' +

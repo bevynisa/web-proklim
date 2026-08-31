@@ -47,6 +47,15 @@
       '<input type="text" id="situs-footer-teks" value="' + esc(s.footer_teks || "") + '">' +
       '<p class="hint">Baris paling bawah tiap halaman, ditulis persis apa adanya. Contoh: "© 2026 ProKlim Sanggang Berkreasi, Desa Sanggang, Bulu, Sukoharjo." Kosongkan untuk pakai teks bawaan.</p></div>' +
 
+      '<div class="dua-kolom">' +
+      '<div class="field"><label for="situs-kontak-nama">Nama Kontak</label>' +
+      '<input type="text" id="situs-kontak-nama" value="' + esc(s.kontak_nama || "") + '">' +
+      '<p class="hint">Nama orang yang bisa dihubungi warga. Contoh: "Janu Hari Setiawan"</p></div>' +
+      '<div class="field"><label for="situs-kontak-telepon">Nomor Telepon / WhatsApp</label>' +
+      '<input type="text" id="situs-kontak-telepon" value="' + esc(s.kontak_telepon || "") + '">' +
+      '<p class="hint">Contoh: "+62 858-0276-0778". Kosongkan salah satu kalau belum ada kontaknya, keduanya akan tampil di footer.</p></div>' +
+      "</div>" +
+
       '<button type="submit" class="tombol tombol-utama">Simpan Perubahan</button>' +
       "</form></div>";
 
@@ -63,6 +72,8 @@
           email: UI.nilai("situs-email"),
           tentang_singkat: UI.nilai("situs-tentang"),
           footer_teks: UI.nilai("situs-footer-teks"),
+          kontak_nama: UI.nilai("situs-kontak-nama"),
+          kontak_telepon: UI.nilai("situs-kontak-telepon"),
         });
         UI.pesan("Berhasil disimpan! Perubahan sudah langsung tampil di website.", true);
       } catch (err) {
