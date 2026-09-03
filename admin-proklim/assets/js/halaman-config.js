@@ -3,6 +3,7 @@
 var IKON_SVG = {
   situs: '<line x1="4" y1="6" x2="20" y2="6"/><circle cx="9" cy="6" r="2"/><line x1="4" y1="12" x2="20" y2="12"/><circle cx="15" cy="12" r="2"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="9" cy="18" r="2"/>',
   beranda: '<path d="M4 11l8-7 8 7"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/>',
+  "data-dasar": '<path d="M4 19V9M10 19V5M16 19v-7M4 19h16"/>',
   struktur: '<rect x="9" y="3" width="6" height="4" rx="1"/><rect x="3" y="15" width="6" height="4" rx="1"/><rect x="15" y="15" width="6" height="4" rx="1"/><path d="M12 7v4M6 15v-2a2 2 0 012-2h8a2 2 0 012 2v2"/>',
   adaptasi: '<path d="M12 3s6 7 6 11a6 6 0 01-12 0c0-4 6-11 6-11z"/>',
   mitigasi: '<path d="M4 20c8 0 14-6 14-14V4h-2C8 4 4 10 4 18v2z"/><path d="M4 20c4-4 8-8 14-14"/>',
@@ -25,6 +26,7 @@ function ikonSvg(id) {
 window.MENU = [
   { id: "situs", label: "Pengaturan Situs", tipe: "situs" },
   { id: "beranda", label: "Beranda", tipe: "halaman", halaman: "beranda" },
+  { id: "data-dasar", label: "Data Dasar", tipe: "halaman", halaman: "data-dasar" },
   { id: "struktur", label: "Struktur Pengurus", tipe: "struktur" },
   { id: "adaptasi", label: "Adaptasi", tipe: "halaman", halaman: "adaptasi" },
   { id: "mitigasi", label: "Mitigasi", tipe: "halaman", halaman: "mitigasi" },
