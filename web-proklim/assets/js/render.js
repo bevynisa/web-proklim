@@ -778,7 +778,7 @@
     }).join("");
     return (
       '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) +
-      '<div class="kartu-putih vbar-kartu">' +
+      '<div class="kartu-putih vbar-kartu' + (satuSeri ? " vbar-kartu-rapat" : "") + '">' +
         '<div class="vbar-tooltip"></div>' +
         '<div class="vbar-plot">' +
           '<div class="vbar-sumbu-y">' + sumbuY + "</div>" +

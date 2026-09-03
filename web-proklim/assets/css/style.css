@@ -939,6 +939,10 @@ table.tabel.polos td:last-child { white-space: normal; font-weight: 500; color: 
   gap: 28px; padding: 4px 12px 8px; min-width: 100%; position: relative;
 }
 .vbar-kolom { display: flex; flex-direction: column; align-items: center; flex-shrink: 0; width: 116px; }
+/* grafik 1 seri (mis. curah hujan/suhu bulanan) — kolom cuma 1 batang,
+   jaraknya dirapatkan biar tidak kelihatan renggang-renggang */
+.vbar-kartu-rapat .vbar-chart { gap: 10px; }
+.vbar-kartu-rapat .vbar-kolom { width: 68px; }
 .vbar-grup { display: flex; align-items: flex-end; gap: 8px; }
 .vbar-satu { display: flex; flex-direction: column; align-items: center; justify-content: flex-end; cursor: pointer; }
 .vbar-bungkus {
@@ -964,6 +968,8 @@ table.tabel.polos td:last-child { white-space: normal; font-weight: 500; color: 
   .vbar-kolom { width: 86px; }
   .vbar-grup { gap: 6px; }
   .vbar-chart { gap: 16px; }
+  .vbar-kartu-rapat .vbar-chart { gap: 8px; }
+  .vbar-kartu-rapat .vbar-kolom { width: 52px; }
 }
 
 /* kartu tooltip melayang saat hover/tap batang */
