@@ -149,6 +149,16 @@
     return r ? Object.assign({ tipe: r.tipe_blok }, r.konten || {}) : null;
   }
 
+  // seperti susunBlokHalaman, tapi ikut mengembalikan "urutan" tiap blok —
+  // dipakai saat perlu menyisipkan blok tambahan (mis. blok yang dipakai
+  // bersama halaman lain) di antara blok halaman ini berdasar urutan asli,
+  // bukan cuma ditaruh di posisi tetap
+  function blokHalamanDenganUrutan(semuaKonten, halamanId) {
+    return semuaKonten
+      .filter(function (r) { return r.halaman === halamanId; })
+      .map(function (r) { return { urutan: r.urutan, blok: Object.assign({ tipe: r.tipe_blok }, r.konten || {}) }; });
+  }
+
   function susunHalaman(semuaKonten, strukturBlok) {
     function blok(id) { return susunBlokHalaman(semuaKonten, id); }
     function halamanBiasa(id) {
@@ -164,7 +174,16 @@
       {
         id: "data-dasar", ikon: META_HALAMAN["data-dasar"].ikon, judul: META_HALAMAN["data-dasar"].judul,
         subjudul: META_HALAMAN["data-dasar"].subjudul,
-        blok: (statistikDesa ? [statistikDesa] : []).concat(blok("data-dasar")),
+        // statistik desa (dipakai bersama Beranda) disisipkan di antara
+        // blok data-dasar lain berdasar urutan asli tiap blok di database,
+        // bukan ditaruh di posisi tetap — supaya tidak salah urutan kalau
+        // suatu saat ada blok lain yang dipindah ke atas/bawahnya
+        blok: (function () {
+          var daftar = blokHalamanDenganUrutan(semuaKonten, "data-dasar");
+          if (statistikDesa) daftar.push({ urutan: 0.5, blok: statistikDesa });
+          daftar.sort(function (a, b) { return a.urutan - b.urutan; });
+          return daftar.map(function (x) { return x.blok; });
+        })(),
       },
       halamanBiasa("adaptasi"),
       halamanBiasa("mitigasi"),
