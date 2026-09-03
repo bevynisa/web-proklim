@@ -317,7 +317,10 @@ main { padding-bottom: 60px; }
   -webkit-overflow-scrolling: touch;
 }
 .stat {
-  flex: 0 0 275px;
+  /* boleh melebar kalau ruangnya masih sisa (mis. kartu cuma 3 biji) —
+     supaya label yang agak panjang tidak kepaksa pecah 2 baris — tapi
+     tidak pernah menyusut di bawah 275px */
+  flex: 1 0 275px;
   position: relative; background: var(--putih); border: 1px solid var(--garis);
   border-radius: var(--radius); padding: 22px 20px 20px; overflow: hidden;
   box-shadow: var(--bayang); transition: transform .2s ease, box-shadow .2s ease;
@@ -336,7 +339,7 @@ main { padding-bottom: 60px; }
 .stat-garis { position: relative; z-index: 1; width: 32px; height: 4px; border-radius: 3px; background: var(--grad-aksen); margin: 12px 0 10px; }
 .stat .label {
   position: relative; z-index: 1; font-weight: 700; color: var(--hijau-900);
-  font-size: 13.5px; text-transform: uppercase; letter-spacing: .03em;
+  font-size: 13px; text-transform: uppercase; letter-spacing: .015em;
 }
 .stat .ket { position: relative; z-index: 1; color: var(--teks-lembut); margin-top: 4px; font-size: 12px; }
 
