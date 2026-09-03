@@ -898,42 +898,47 @@
     );
   };
 
+  // satu kartu video (dipakai blok.video di halaman masing-masing, dan
+  // dipakai ulang di tab Video halaman Galeri) — klik-nya otomatis
+  // kepasang lewat pasangVideo() di app.js selama masih pakai kelas
+  // "kartu-video bisa-klik" dan data-video-* ini
+  function kartuVideo(i, idx) {
+    var idYt = i.src ? idYoutube(i.src) : null;
+    var pratonton;
+    if (idYt) {
+      pratonton =
+        '<div class="pratonton-video" style="background-image:url(\'https://img.youtube.com/vi/' + esc(idYt) + "/hqdefault.jpg')\">" +
+        '<span class="tombol-putar"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></span>' +
+        "</div>";
+    } else if (i.src) {
+      pratonton =
+        '<div class="pratonton-video"' + (i.poster ? " style=\"background-image:url('" + esc(i.poster) + "')\"" : "") + '>' +
+        '<span class="tombol-putar"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></span>' +
+        "</div>";
+    } else {
+      var ikon = ikonVideo(i.judul);
+      pratonton =
+        '<div class="pratonton-video kosong">' +
+        '<span class="nomor-video">' + String(idx + 1).padStart(2, "0") + "</span>" +
+        (ikon
+          ? '<span class="ikon-tema-video"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + ikon + "</svg></span>"
+          : "") +
+        '<span class="tombol-putar"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></span>' +
+        '<span class="label-segera">Segera hadir</span>' +
+        "</div>";
+    }
+    var atributKlik =
+      ' data-video-yt="' + esc(idYt || "") + '" data-video-src="' + esc(idYt ? "" : i.src || "") +
+      '" data-video-judul="' + esc(i.judul || "") + '" data-video-caption="' + esc(i.caption || "") + '"';
+    return '<figure class="kartu-video bisa-klik"' + atributKlik + ">" + pratonton +
+      "<figcaption><b>" + esc(i.judul) + "</b>" + esc(i.caption || "") + "</figcaption></figure>";
+  }
+
   blok.video = function (b) {
     return (
       '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) +
-      '<div class="grid-video">' +
-        (b.item || []).map(function (i, idx) {
-          var idYt = i.src ? idYoutube(i.src) : null;
-          var pratonton;
-          if (idYt) {
-            pratonton =
-              '<div class="pratonton-video" style="background-image:url(\'https://img.youtube.com/vi/' + esc(idYt) + "/hqdefault.jpg')\">" +
-              '<span class="tombol-putar"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></span>' +
-              "</div>";
-          } else if (i.src) {
-            pratonton =
-              '<div class="pratonton-video"' + (i.poster ? " style=\"background-image:url('" + esc(i.poster) + "')\"" : "") + '>' +
-              '<span class="tombol-putar"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></span>' +
-              "</div>";
-          } else {
-            var ikon = ikonVideo(i.judul);
-            pratonton =
-              '<div class="pratonton-video kosong">' +
-              '<span class="nomor-video">' + String(idx + 1).padStart(2, "0") + "</span>" +
-              (ikon
-                ? '<span class="ikon-tema-video"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + ikon + "</svg></span>"
-                : "") +
-              '<span class="tombol-putar"><svg viewBox="0 0 24 24"><polygon points="8,5 19,12 8,19"/></svg></span>' +
-              '<span class="label-segera">Segera hadir</span>' +
-              "</div>";
-          }
-          var atributKlik =
-            ' data-video-yt="' + esc(idYt || "") + '" data-video-src="' + esc(idYt ? "" : i.src || "") +
-            '" data-video-judul="' + esc(i.judul || "") + '" data-video-caption="' + esc(i.caption || "") + '"';
-          return '<figure class="kartu-video bisa-klik"' + atributKlik + ">" + pratonton +
-            "<figcaption><b>" + esc(i.judul) + "</b>" + esc(i.caption || "") + "</figcaption></figure>";
-        }).join("") +
-      "</div></div></section>"
+      '<div class="grid-video">' + (b.item || []).map(kartuVideo).join("") + "</div>" +
+      "</div></section>"
     );
   };
 
@@ -1059,23 +1064,45 @@
   };
 
   blok["galeri-penuh"] = function (b) {
+    b = b || {};
     var semua = S.data.galeri;
-    if (!semua.length) {
-      return '<section class="seksi"><div class="wadah">' + kepalaSeksi(b || {}) + '<div class="kosong-galeri">' +
-        '<div class="ikon-kosong">🖼️</div><p>Galeri masih kosong. Tambahkan foto lewat halaman Admin.</p></div></div></section>';
+    var itemVideo = (b.video && b.video.item) || [];
+
+    var panelFoto = !semua.length
+      ? '<div class="kosong-galeri"><div class="ikon-kosong">🖼️</div><p>Galeri masih kosong. Tambahkan foto lewat halaman Admin.</p></div>'
+      : (function () {
+          var kategori = S.kategoriGaleri();
+          return (
+            '<div class="filter-galeri" id="filter-galeri">' +
+              '<button class="pil aktif" data-kat="">Semua (' + semua.length + ")</button>" +
+              kategori.map(function (k) {
+                var n = semua.filter(function (g) { return g.kategori === k; }).length;
+                return '<button class="pil" data-kat="' + esc(k) + '">' + esc(k) + " (" + n + ")</button>";
+              }).join("") +
+            "</div>" +
+            '<div class="galeri-masonry" id="grid-galeri">' +
+              semua.map(function (g, i) { return selFoto(g, i); }).join("") +
+            "</div>"
+          );
+        })();
+
+    // tanpa video sama sekali: tampil polos seperti sebelumnya, tanpa tab
+    if (!itemVideo.length) {
+      return '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) + panelFoto + "</div></section>";
     }
-    var kategori = S.kategoriGaleri();
+
+    var panelVideo = '<div class="grid-video">' + itemVideo.map(kartuVideo).join("") + "</div>";
     return (
-      '<section class="seksi"><div class="wadah">' + kepalaSeksi(b || {}) +
-        '<div class="filter-galeri" id="filter-galeri">' +
-          '<button class="pil aktif" data-kat="">Semua (' + semua.length + ")</button>" +
-          kategori.map(function (k) {
-            var n = semua.filter(function (g) { return g.kategori === k; }).length;
-            return '<button class="pil" data-kat="' + esc(k) + '">' + esc(k) + " (" + n + ")</button>";
-          }).join("") +
-        "</div>" +
-        '<div class="galeri-masonry" id="grid-galeri">' +
-          semua.map(function (g, i) { return selFoto(g, i); }).join("") +
+      '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) +
+        '<div class="tab-blok tab-blok-galeri" data-tab-grup>' +
+          '<div class="tab-toggle" role="tablist">' +
+            '<button class="tab-tombol aktif" data-tab-target="0">🖼️ Foto (' + semua.length + ')</button>' +
+            '<button class="tab-tombol" data-tab-target="1">🎬 Video (' + itemVideo.length + ')</button>' +
+          "</div>" +
+          '<div class="tab-badan">' +
+            '<div class="tab-panel aktif" data-tab-panel="0">' + panelFoto + "</div>" +
+            '<div class="tab-panel" data-tab-panel="1">' + panelVideo + "</div>" +
+          "</div>" +
         "</div>" +
       "</div></section>"
     );

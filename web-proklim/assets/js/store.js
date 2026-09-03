@@ -141,6 +141,15 @@
       .map(function (r) { return Object.assign({ tipe: r.tipe_blok }, r.konten || {}); });
   }
 
+  // ambil satu blok tertentu lewat kunci_blok-nya, terlepas dari kolom
+  // "halaman" di database — dipakai untuk menampilkan ulang blok yang sama
+  // di lebih dari satu halaman publik (mis. video Mitigasi ikut tampil
+  // sebagai tab di halaman Galeri, tanpa disimpan dobel di database)
+  function cariBlokByKunci(semuaKonten, kunci) {
+    var r = (semuaKonten || []).filter(function (x) { return x.kunci_blok === kunci; })[0];
+    return r ? Object.assign({ tipe: r.tipe_blok }, r.konten || {}) : null;
+  }
+
   function susunHalaman(semuaKonten, strukturBlok) {
     function blok(id) { return susunBlokHalaman(semuaKonten, id); }
     function halamanBiasa(id) {
@@ -149,6 +158,7 @@
     }
 
     var blokLembaga = blok("klb-lembaga"); // urutan: [profil, rencana-kerja, tab]
+    var videoMitigasi = cariBlokByKunci(semuaKonten, "mitigasi-video");
 
     return [
       { id: "beranda", judul: "Beranda", blok: blok("beranda").concat([strukturBlok, ARTIKEL_TERBARU_TETAP]) },
@@ -171,7 +181,7 @@
       { id: "perencanaan", ikon: META_HALAMAN.perencanaan.ikon, judul: META_HALAMAN.perencanaan.judul, subjudul: META_HALAMAN.perencanaan.subjudul, blok: blok("perencanaan") },
       { id: "data-aksi", ikon: META_HALAMAN["data-aksi"].ikon, judul: META_HALAMAN["data-aksi"].judul, subjudul: META_HALAMAN["data-aksi"].subjudul, blok: blok("data-aksi") },
       { id: "artikel", ikon: META_HALAMAN.artikel.ikon, judul: META_HALAMAN.artikel.judul, subjudul: META_HALAMAN.artikel.subjudul, blok: [{ tipe: "daftar-artikel" }] },
-      { id: "galeri", ikon: META_HALAMAN.galeri.ikon, judul: META_HALAMAN.galeri.judul, subjudul: META_HALAMAN.galeri.subjudul, blok: [{ tipe: "galeri-penuh" }] },
+      { id: "galeri", ikon: META_HALAMAN.galeri.ikon, judul: META_HALAMAN.galeri.judul, subjudul: META_HALAMAN.galeri.subjudul, blok: [{ tipe: "galeri-penuh", video: videoMitigasi }] },
     ];
   }
 
