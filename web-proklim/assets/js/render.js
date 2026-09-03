@@ -649,9 +649,12 @@
     // (dulu cuma dipakai tabel kolom banyak) sekarang dipakai semua tabel
     // biar layoutnya konsisten satu gaya, contohnya seperti tabel Data Aksi
     var ringkas = kolom.length <= 3;
+    // kolom pertama biasanya nomor urut (rata tengah, sempit) — tapi kalau
+    // isinya kalimat panjang (mis. "Ancaman"), biar rata kiri seperti kolom lain
+    var kolom1Teks = !!b.kolomPertamaTeks;
     return (
       '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) +
-      '<div class="bungkus-tabel' + (ringkas ? " bungkus-tabel-ringkas" : "") + '"><table class="tabel polos">' +
+      '<div class="bungkus-tabel' + (ringkas ? " bungkus-tabel-ringkas" : "") + '"><table class="tabel polos' + (kolom1Teks ? " kolom1-teks" : "") + '">' +
         "<thead><tr>" + kolom.map(function (k) { return "<th>" + esc(k) + "</th>"; }).join("") + "</tr></thead>" +
         "<tbody>" + isi + "</tbody></table></div>" +
       "</div></section>"

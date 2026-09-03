@@ -885,6 +885,10 @@ table.tabel tbody tr:hover { background: rgba(61, 104, 222, .1); }
 table.tabel td:first-child {
   font-weight: 800; color: var(--hijau-800); text-align: center; width: 1%;
 }
+/* kolom pertama berisi kalimat (bukan nomor urut) — rata kiri seperti kolom lain */
+table.tabel.kolom1-teks td:first-child {
+  font-weight: 500; color: inherit; text-align: left; width: auto; white-space: normal;
+}
 table.tabel td:last-child { font-weight: 600; color: var(--hijau-800); white-space: nowrap; }
 table.tabel td.kelompok {
   font-weight: 700; color: var(--hijau-800); background: #f4f9f5;
