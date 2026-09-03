@@ -10,6 +10,8 @@ var IKON_SVG = {
   "klb-partisipasi": '<circle cx="8" cy="8" r="2.5"/><circle cx="16" cy="8" r="2.5"/><path d="M3 20c0-3 2.2-5 5-5s5 2 5 5"/><path d="M11 20c0-3 2.2-5 5-5s5 2 5 5"/>',
   "klb-eksternal": '<circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.5 2.5 2.5 13.5 0 16M12 4c-2.5 2.5-2.5 13.5 0 16"/>',
   "klb-data": '<path d="M3 6a1 1 0 011-1h5l2 2h9a1 1 0 011 1v10a1 1 0 01-1 1H4a1 1 0 01-1-1V6z"/>',
+  perencanaan: '<rect x="3" y="4" width="18" height="17" rx="1"/><path d="M3 9h18M8 3v3M16 3v3"/><path d="M7.5 13h3M7.5 17h6"/>',
+  "data-aksi": '<path d="M4 20V10M12 20V4M20 20v-7"/>',
   artikel: '<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/>',
   galeri: '<rect x="3" y="4" width="18" height="14" rx="1"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5-4 4-3-3-6 6"/>',
 };
@@ -30,6 +32,8 @@ window.MENU = [
   { id: "klb-partisipasi", label: "Partisipasi & Kapasitas Masyarakat", tipe: "halaman", halaman: "klb-partisipasi" },
   { id: "klb-eksternal", label: "Dukungan & Pengembangan", tipe: "halaman", halaman: "klb-eksternal" },
   { id: "klb-data", label: "Data & Manfaat Program", tipe: "halaman", halaman: "klb-data" },
+  { id: "perencanaan", label: "Perencanaan", tipe: "halaman", halaman: "perencanaan" },
+  { id: "data-aksi", label: "Data Aksi", tipe: "halaman", halaman: "data-aksi" },
   { id: "artikel", label: "Artikel", tipe: "artikel" },
   { id: "galeri", label: "Galeri Foto", tipe: "galeri" },
 ].map(function (m) { m.ikon = ikonSvg(m.id); return m; });

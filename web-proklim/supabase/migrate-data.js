@@ -196,6 +196,10 @@ const PEMETAAN_BLOK = [
   ["adaptasi", 3, "akordeon", "adaptasi-ketahanan-pangan", "Peningkatan Ketahanan Pangan"],
   ["adaptasi", 4, "akordeon", "adaptasi-penyakit-iklim", "Pengendalian Penyakit Terkait Iklim"],
   ["adaptasi", 5, "peringkat-ganda", "adaptasi-indeks-kerentanan", "Indeks Kerentanan Longsor & Kekeringan per Dusun"],
+  // Catatan: sumber datanya masih di halaman "adaptasi" pada data.js (struktur lama),
+  // tapi baris ini di database kini dipindah live ke halaman "data-aksi" lewat SQL —
+  // lihat supabase/pindah-data-aksi.sql. Jangan jalankan ulang skrip ini tanpa
+  // menyesuaikan itu, atau baris ini akan kembali tersimpan di bawah "adaptasi".
   ["adaptasi", 6, "tabel", "adaptasi-data-aksi", "Data Aksi Adaptasi"],
 
   ["mitigasi", 0, "teks", "mitigasi-arah-aksi", "Arah Aksi Mitigasi"],
@@ -205,7 +209,7 @@ const PEMETAAN_BLOK = [
   ["mitigasi", 4, "kartu", "mitigasi-pertanian-rendah-emisi", "Budidaya Pertanian Rendah Emisi GRK"],
   ["mitigasi", 5, "akordeon", "mitigasi-tutupan-vegetasi", "Peningkatan dan Mempertahankan Tutupan Vegetasi"],
   ["mitigasi", 6, "akordeon", "mitigasi-karhutla", "Pencegahan dan Penanggulangan Kebakaran Hutan dan Lahan"],
-  ["mitigasi", 7, "tabel", "mitigasi-data-aksi", "Data Aksi Mitigasi"],
+  ["mitigasi", 7, "tabel", "mitigasi-data-aksi", "Data Aksi Mitigasi"], // juga dipindah live ke "data-aksi", lihat catatan di atas
   ["mitigasi", 8, "gambar", "mitigasi-peta-evakuasi", "Peta Mitigasi Bencana Longsor & Rute Evakuasi"],
   ["mitigasi", 9, "video", "mitigasi-video", "Video Edukasi Mitigasi Bencana"],
 

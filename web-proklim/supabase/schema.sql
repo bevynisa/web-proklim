@@ -79,8 +79,9 @@ create table if not exists galeri (
 create table if not exists konten_halaman (
   id uuid primary key default gen_random_uuid(),
   halaman text not null check (halaman in (
-    'beranda', 'adaptasi', 'mitigasi',
-    'klb-lembaga', 'klb-partisipasi', 'klb-eksternal', 'klb-data'
+    'beranda', 'data-dasar', 'adaptasi', 'mitigasi',
+    'klb-lembaga', 'klb-partisipasi', 'klb-eksternal', 'klb-data',
+    'perencanaan', 'data-aksi'
   )),
   kunci_blok text not null unique,
   tipe_blok text not null,

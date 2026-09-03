@@ -17,6 +17,7 @@
 
   var MENU_TETAP = [
     { id: "m-beranda", label: "Beranda", halaman: "beranda" },
+    { id: "m-data-dasar", label: "Data Dasar", halaman: "data-dasar" },
     { id: "m-adaptasi", label: "Adaptasi", halaman: "adaptasi" },
     { id: "m-mitigasi", label: "Mitigasi", halaman: "mitigasi" },
     {
@@ -29,6 +30,8 @@
         { id: "m-klb-4", label: "Data & Manfaat Program", halaman: "klb-data" },
       ],
     },
+    { id: "m-perencanaan", label: "Perencanaan", halaman: "perencanaan" },
+    { id: "m-data-aksi", label: "Data Aksi", halaman: "data-aksi" },
     { id: "m-artikel", label: "Artikel", halaman: "artikel" },
     { id: "m-galeri", label: "Galeri", halaman: "galeri" },
   ];
@@ -36,6 +39,10 @@
   // ikon & judul/subjudul tiap halaman — bagian tetap situs, bukan konten
   // yang diedit admin, jadi tidak perlu disimpan di database
   var META_HALAMAN = {
+    "data-dasar": {
+      ikon: "📊", judul: "Data Dasar",
+      subjudul: "Profil singkat dan data statistik dasar Desa Sanggang.",
+    },
     adaptasi: {
       ikon: "💧", judul: "Adaptasi Perubahan Iklim",
       subjudul: "Upaya menyesuaikan diri terhadap dampak perubahan iklim: mengamankan air, pangan, dan kesehatan masyarakat.",
@@ -59,6 +66,14 @@
     "klb-data": {
       ikon: "🗂️", judul: "Data & Manfaat Program",
       subjudul: "Sistem pencatatan dan pemantauan data aksi, serta manfaat ekonomi, sosial, dan lingkungan yang dirasakan warga.",
+    },
+    perencanaan: {
+      ikon: "🗓️", judul: "Perencanaan",
+      subjudul: "Rencana kerja dan program ProKlim Desa Sanggang.",
+    },
+    "data-aksi": {
+      ikon: "📋", judul: "Data Aksi",
+      subjudul: "Rekap kegiatan adaptasi dan mitigasi yang telah dilaksanakan di Desa Sanggang.",
     },
     artikel: {
       ikon: "📰", judul: "Artikel",
@@ -126,6 +141,14 @@
       .map(function (r) { return Object.assign({ tipe: r.tipe_blok }, r.konten || {}); });
   }
 
+  // ambil satu blok tertentu lewat kunci_blok-nya, terlepas dari kolom
+  // "halaman" di database — dipakai untuk menampilkan ulang blok yang sama
+  // di lebih dari satu halaman publik (mis. statistik desa di Beranda & Data Dasar)
+  function cariBlokByKunci(semuaKonten, kunci) {
+    var r = (semuaKonten || []).filter(function (x) { return x.kunci_blok === kunci; })[0];
+    return r ? Object.assign({ tipe: r.tipe_blok }, r.konten || {}) : null;
+  }
+
   function susunHalaman(semuaKonten, strukturBlok) {
     function blok(id) { return susunBlokHalaman(semuaKonten, id); }
     function halamanBiasa(id) {
@@ -134,9 +157,15 @@
     }
 
     var blokLembaga = blok("klb-lembaga"); // urutan: [profil, rencana-kerja, tab]
+    var statistikDesa = cariBlokByKunci(semuaKonten, "beranda-profil-statistik");
 
     return [
       { id: "beranda", judul: "Beranda", blok: blok("beranda").concat([strukturBlok, ARTIKEL_TERBARU_TETAP]) },
+      {
+        id: "data-dasar", ikon: META_HALAMAN["data-dasar"].ikon, judul: META_HALAMAN["data-dasar"].judul,
+        subjudul: META_HALAMAN["data-dasar"].subjudul,
+        blok: (statistikDesa ? [statistikDesa] : []).concat(blok("data-dasar")),
+      },
       halamanBiasa("adaptasi"),
       halamanBiasa("mitigasi"),
       {
@@ -148,6 +177,8 @@
       halamanBiasa("klb-partisipasi"),
       halamanBiasa("klb-eksternal"),
       halamanBiasa("klb-data"),
+      { id: "perencanaan", ikon: META_HALAMAN.perencanaan.ikon, judul: META_HALAMAN.perencanaan.judul, subjudul: META_HALAMAN.perencanaan.subjudul, blok: blok("perencanaan") },
+      { id: "data-aksi", ikon: META_HALAMAN["data-aksi"].ikon, judul: META_HALAMAN["data-aksi"].judul, subjudul: META_HALAMAN["data-aksi"].subjudul, blok: blok("data-aksi") },
       { id: "artikel", ikon: META_HALAMAN.artikel.ikon, judul: META_HALAMAN.artikel.judul, subjudul: META_HALAMAN.artikel.subjudul, blok: [{ tipe: "daftar-artikel" }] },
       { id: "galeri", ikon: META_HALAMAN.galeri.ikon, judul: META_HALAMAN.galeri.judul, subjudul: META_HALAMAN.galeri.subjudul, blok: [{ tipe: "galeri-penuh" }] },
     ];
