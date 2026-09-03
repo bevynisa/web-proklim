@@ -1081,7 +1081,7 @@
           var n = semua.filter(function (g) { return g.kategori === k; }).length;
           return '<button class="pil" data-kat="' + esc(k) + '">' + esc(k) + " (" + n + ")</button>";
         }).join("") +
-        (itemVideo.length ? '<button class="pil" data-kat="__video__">🎬 Video (' + itemVideo.length + ")</button>" : "") +
+        (itemVideo.length ? '<button class="pil" data-kat="__video__">Video (' + itemVideo.length + ")</button>" : "") +
       "</div>";
 
     var gridFoto = !semua.length
