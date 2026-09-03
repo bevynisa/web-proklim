@@ -453,18 +453,21 @@
 
   function pasangGaleri() {
     var grid = document.getElementById("grid-galeri");
+    var gridVideo = document.getElementById("grid-galeri-video");
     var filter = document.getElementById("filter-galeri");
-    if (grid && grid.classList.contains("galeri-masonry")) {
-      tampilkanGaleri(grid, "");
-      if (filter) {
-        filter.querySelectorAll(".pil").forEach(function (b) {
-          b.onclick = function () {
-            filter.querySelectorAll(".pil").forEach(function (x) { x.classList.remove("aktif"); });
-            b.classList.add("aktif");
-            tampilkanGaleri(grid, b.getAttribute("data-kat"));
-          };
-        });
-      }
+    if (grid) tampilkanGaleri(grid, "");
+    if (filter) {
+      filter.querySelectorAll(".pil").forEach(function (b) {
+        b.onclick = function () {
+          filter.querySelectorAll(".pil").forEach(function (x) { x.classList.remove("aktif"); });
+          b.classList.add("aktif");
+          var kat = b.getAttribute("data-kat");
+          var pilihVideo = kat === "__video__";
+          if (grid) grid.style.display = pilihVideo ? "none" : "";
+          if (gridVideo) gridVideo.style.display = pilihVideo ? "" : "none";
+          if (!pilihVideo && grid) tampilkanGaleri(grid, kat);
+        };
+      });
     }
     document.querySelectorAll(".foto").forEach(function (f) {
       f.onclick = function () { bukaLightbox(f); };

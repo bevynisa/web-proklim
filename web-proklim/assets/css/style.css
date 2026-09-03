@@ -664,17 +664,6 @@ a.kartu:hover { transform: translateY(-3px); box-shadow: var(--bayang-kuat); }
   .tab-pernyataan { font-size: 18px; }
 }
 
-/* Tab Foto/Video di halaman Galeri — toggle pil sama gayanya dengan tab
-   Visi/Misi, tapi badan tab TIDAK pakai kartu hijau gelap (itu didesain
-   khusus untuk teks) dan rata kiri (bukan tengah) biar selaras dengan
-   filter pil galeri yang sudah ada; foto/video sudah punya visualnya sendiri */
-.tab-blok-galeri { text-align: left; margin-top: 0; }
-.tab-blok-galeri .tab-toggle { margin-bottom: 22px; }
-.tab-blok-galeri .tab-badan {
-  margin-top: 0; padding: 0; background: none; color: inherit;
-  border-radius: 0; box-shadow: none;
-}
-
 /* Checklist — pengganti tabel 2 kolom "Komponen / Keterangan", gaya modern-santai */
 .checklist-daftar { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
 /* Varian 2 kolom — 4 item turun dulu baru lanjut ke kolom sebelah, supaya daftar

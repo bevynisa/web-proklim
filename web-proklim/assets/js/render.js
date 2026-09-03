@@ -1068,43 +1068,32 @@
     var semua = S.data.galeri;
     var itemVideo = (b.video && b.video.item) || [];
 
-    var panelFoto = !semua.length
-      ? '<div class="kosong-galeri"><div class="ikon-kosong">🖼️</div><p>Galeri masih kosong. Tambahkan foto lewat halaman Admin.</p></div>'
-      : (function () {
-          var kategori = S.kategoriGaleri();
-          return (
-            '<div class="filter-galeri" id="filter-galeri">' +
-              '<button class="pil aktif" data-kat="">Semua (' + semua.length + ")</button>" +
-              kategori.map(function (k) {
-                var n = semua.filter(function (g) { return g.kategori === k; }).length;
-                return '<button class="pil" data-kat="' + esc(k) + '">' + esc(k) + " (" + n + ")</button>";
-              }).join("") +
-            "</div>" +
-            '<div class="galeri-masonry" id="grid-galeri">' +
-              semua.map(function (g, i) { return selFoto(g, i); }).join("") +
-            "</div>"
-          );
-        })();
-
-    // tanpa video sama sekali: tampil polos seperti sebelumnya, tanpa tab
-    if (!itemVideo.length) {
-      return '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) + panelFoto + "</div></section>";
+    if (!semua.length && !itemVideo.length) {
+      return '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) + '<div class="kosong-galeri">' +
+        '<div class="ikon-kosong">🖼️</div><p>Galeri masih kosong. Tambahkan foto lewat halaman Admin.</p></div></div></section>';
     }
 
-    var panelVideo = '<div class="grid-video">' + itemVideo.map(kartuVideo).join("") + "</div>";
+    var kategori = S.kategoriGaleri();
+    var pil =
+      '<div class="filter-galeri" id="filter-galeri">' +
+        '<button class="pil aktif" data-kat="">Semua (' + semua.length + ")</button>" +
+        kategori.map(function (k) {
+          var n = semua.filter(function (g) { return g.kategori === k; }).length;
+          return '<button class="pil" data-kat="' + esc(k) + '">' + esc(k) + " (" + n + ")</button>";
+        }).join("") +
+        (itemVideo.length ? '<button class="pil" data-kat="__video__">🎬 Video (' + itemVideo.length + ")</button>" : "") +
+      "</div>";
+
+    var gridFoto = !semua.length
+      ? '<div class="kosong-galeri"><div class="ikon-kosong">🖼️</div><p>Belum ada foto. Tambahkan lewat halaman Admin.</p></div>'
+      : '<div class="galeri-masonry" id="grid-galeri">' + semua.map(function (g, i) { return selFoto(g, i); }).join("") + "</div>";
+
+    var gridVideo = itemVideo.length
+      ? '<div class="grid-video" id="grid-galeri-video" style="display:none">' + itemVideo.map(kartuVideo).join("") + "</div>"
+      : "";
+
     return (
-      '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) +
-        '<div class="tab-blok tab-blok-galeri" data-tab-grup>' +
-          '<div class="tab-toggle" role="tablist">' +
-            '<button class="tab-tombol aktif" data-tab-target="0">🖼️ Foto (' + semua.length + ')</button>' +
-            '<button class="tab-tombol" data-tab-target="1">🎬 Video (' + itemVideo.length + ')</button>' +
-          "</div>" +
-          '<div class="tab-badan">' +
-            '<div class="tab-panel aktif" data-tab-panel="0">' + panelFoto + "</div>" +
-            '<div class="tab-panel" data-tab-panel="1">' + panelVideo + "</div>" +
-          "</div>" +
-        "</div>" +
-      "</div></section>"
+      '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) + pil + gridFoto + gridVideo + "</div></section>"
     );
   };
 
