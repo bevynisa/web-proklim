@@ -735,20 +735,23 @@
     var item = b.item || [];
     if (!item.length) return "";
     var seri = b.seri || [{ nama: "Seri A", kode: "A" }, { nama: "Seri B", kode: "B" }];
+    var satuSeri = seri.length === 1; // 1 seri: label kode & legenda seri tak perlu, judul bagian sudah cukup jelas
     var angka = function (s) { return parseFloat(String(s).replace(",", ".")) || 0; };
+    var dasar = angka(b.minimal || 0);
     var maks = b.maksimal || Math.max.apply(null, item.map(function (i) {
       return Math.max.apply(null, (i.nilai || []).map(angka));
     }));
+    var adaKelas = item.some(function (i) { return (i.kelas || []).some(function (k) { return k; }); });
     var kolom = item.map(function (i) {
       var batang = seri.map(function (s, idx) {
         var nilai = i.nilai[idx], kelas = i.kelas[idx];
-        var persen = Math.max(4, Math.min(100, (angka(nilai) / maks) * 100));
-        var warna = WARNA_KELAS[kelas] || "#43a047";
-        var tip = "<b>" + esc(i.label) + "</b><span>" + esc(s.nama) + ": " + esc(nilai) + "</span>" + lencanaKelas(kelas);
+        var persen = Math.max(4, Math.min(100, ((angka(nilai) - dasar) / (maks - dasar)) * 100));
+        var warna = kelas ? (WARNA_KELAS[kelas] || "#43a047") : WARNA_NETRAL;
+        var tip = "<b>" + esc(i.label) + "</b><span>" + esc(s.nama) + ": " + esc(nilai) + "</span>" + (kelas ? lencanaKelas(kelas) : "");
         return (
           '<div class="vbar-satu" data-tip="' + esc(tip) + '">' +
             '<div class="vbar-bungkus"><div class="vbar-isi" data-tinggi="' + persen + '" style="height:0%;background:' + warna + '"></div></div>' +
-            '<span class="vbar-seri">' + esc(s.kode) + "</span>" +
+            (satuSeri ? "" : '<span class="vbar-seri">' + esc(s.kode) + "</span>") +
           "</div>"
         );
       }).join("");
@@ -762,13 +765,13 @@
     var jumlahTik = 5;
     var sumbuY = "";
     for (var t = jumlahTik; t >= 0; t--) {
-      var nilaiTik = Math.round((maks * t / jumlahTik) * 10) / 10;
+      var nilaiTik = Math.round((dasar + (maks - dasar) * t / jumlahTik) * 10) / 10;
       sumbuY += "<span>" + esc(String(nilaiTik).replace(".", ",")) + "</span>";
     }
-    var seriKeterangan = seri.map(function (s) {
+    var seriKeterangan = satuSeri ? "" : seri.map(function (s) {
       return '<span class="legenda-kotak-item legenda-seri"><b>' + esc(s.kode) + "</b> = " + esc(s.nama) + "</span>";
     }).join("");
-    var legendaKelas = URUTAN_KELAS.map(function (k) {
+    var legendaKelas = !adaKelas ? "" : URUTAN_KELAS.map(function (k) {
       return '<span class="legenda-kotak-item"><i class="kotak" style="background:' + (WARNA_KELAS[k] || "#43a047") + '"></i>' + esc(k) + "</span>";
     }).join("");
     return (
@@ -782,7 +785,7 @@
             '<div class="vbar-chart">' + kolom + "</div>" +
           "</div></div>" +
         "</div>" +
-        '<div class="legenda-kotak">' + seriKeterangan + legendaKelas + "</div>" +
+        (seriKeterangan || legendaKelas ? '<div class="legenda-kotak">' + seriKeterangan + legendaKelas + "</div>" : "") +
       "</div>" +
       "</div></section>"
     );
