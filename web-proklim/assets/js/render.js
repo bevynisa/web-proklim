@@ -643,9 +643,13 @@
       }).join("") + "</tr>";
     }).join("");
 
+    // tabel dengan sedikit kolom (mis. Bulan + 1-2 nilai) dibuat menyesuaikan
+    // lebar isinya sendiri, bukan melebar penuh seperti tabel data yang
+    // kolomnya banyak — biar tidak kelihatan kosong/kegedean
+    var ringkas = kolom.length <= 3;
     return (
       '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) +
-      '<div class="bungkus-tabel"><table class="tabel' + (kolom.length > 3 ? " polos" : "") + '">' +
+      '<div class="bungkus-tabel' + (ringkas ? " bungkus-tabel-ringkas" : "") + '"><table class="tabel' + (kolom.length > 3 ? " polos" : "") + '">' +
         "<thead><tr>" + kolom.map(function (k) { return "<th>" + esc(k) + "</th>"; }).join("") + "</tr></thead>" +
         "<tbody>" + isi + "</tbody></table></div>" +
       "</div></section>"

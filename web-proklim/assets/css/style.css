@@ -864,6 +864,10 @@ a.kartu:hover { transform: translateY(-3px); box-shadow: var(--bayang-kuat); }
   border: 1px solid var(--garis); border-radius: var(--radius); box-shadow: var(--bayang);
   -webkit-overflow-scrolling: touch;
 }
+/* tabel kolom sedikit (mis. Bulan + 1-2 nilai): dibatasi lebarnya,
+   tidak melebar penuh seperti tabel data yang kolomnya banyak */
+.bungkus-tabel-ringkas { max-width: 560px; }
+.bungkus-tabel-ringkas table.tabel { min-width: 0; }
 table.tabel { width: 100%; border-collapse: collapse; font-size: 14.8px; min-width: 520px; }
 table.tabel thead th {
   background: var(--hijau-800); color: #fff; text-align: left;
