@@ -896,6 +896,9 @@ table.tabel.polos td:last-child { white-space: normal; font-weight: 500; color: 
   display: grid; grid-template-columns: 108px 1fr 40px 92px;
   align-items: center; gap: 8px;
 }
+/* baris tanpa lencana kelas (mis. data yang bukan tingkat risiko) —
+   kolom terakhir dilepas, tidak menyisakan ruang kosong */
+.peringkat-daftar-polos .peringkat-baris { grid-template-columns: 108px 1fr 52px; }
 .peringkat-label { font-weight: 700; font-size: 12.5px; color: var(--teks); }
 .peringkat-bar-bungkus { background: var(--hijau-50); border-radius: 999px; height: 9px; overflow: hidden; }
 .peringkat-bar { height: 100%; border-radius: 999px; transition: width .7s cubic-bezier(.2,.7,.3,1); }

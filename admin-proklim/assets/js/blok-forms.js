@@ -413,6 +413,40 @@
     return h;
   }
 
+  /* ---------- Kelompok O: peringkat (grafik batang satu baris per data, mis. curah hujan/suhu bulanan) ---------- */
+  var KOLOM_PERINGKAT = [
+    { key: "label", label: "Label (mis. nama bulan)" },
+    { key: "nilai", label: "Nilai", lebar: "110px" },
+    { key: "kelas", label: "Kelas (boleh kosong)", lebar: "140px", tipe: "select", opsi: ["Tinggi", "Sedang", "Rendah"] },
+  ];
+  function renderO(kunci, k) {
+    var id = idBlok(kunci, "item");
+    return (
+      fTeks(kunci, "judul", "Judul Bagian", k.judul, "Judul yang tampil di atas grafik ini.") +
+      (k.deskripsi !== undefined ? fArea(kunci, "deskripsi", "Deskripsi Singkat", k.deskripsi, "Penjelasan di bawah judul (boleh dikosongkan).", 60) : "") +
+      '<div class="kolom-fleksibel">' +
+      fTeks(kunci, "minimal", "Skala Mulai Dari (boleh kosong)", k.minimal != null ? String(k.minimal) : "", "Kosongkan kalau batang mulai dari 0. Isi angka kalau datanya rentang sempit (contoh: suhu 27-28) biar perbedaan antar baris kelihatan.") +
+      fTeks(kunci, "maksimal", "Skala Sampai (boleh kosong)", k.maksimal != null ? String(k.maksimal) : "", "Kosongkan supaya otomatis memakai nilai tertinggi di data.") +
+      "</div>" +
+      UI.repeaterFlat(id, "Daftar Baris", 'Satu baris untuk satu batang (mis. satu bulan). Kolom "Kelas" boleh dikosongkan kalau datanya bukan tingkat risiko (jadi warna batang netral, tanpa lencana).', k.item, KOLOM_PERINGKAT, "Baris")
+    );
+  }
+  function bacaO(kunci, k) {
+    var h = JSON.parse(JSON.stringify(k));
+    h.judul = nilaiId(idBlok(kunci, "judul"));
+    if (h.deskripsi !== undefined) h.deskripsi = nilaiId(idBlok(kunci, "deskripsi"));
+    var minimal = nilaiId(idBlok(kunci, "minimal"));
+    var maksimal = nilaiId(idBlok(kunci, "maksimal"));
+    if (minimal) h.minimal = Number(minimal); else delete h.minimal;
+    if (maksimal) h.maksimal = Number(maksimal); else delete h.maksimal;
+    h.item = UI.bacaRepeaterFlat(idBlok(kunci, "item")).map(function (b) {
+      var o = { label: b.label || "", nilai: b.nilai || "" };
+      if (b.kelas) o.kelas = b.kelas;
+      return o;
+    });
+    return h;
+  }
+
   var PEMETAAN = {
     "checklist": [renderA, bacaA], "kartu-program": [renderA, bacaA], "profil-grid": [renderA, bacaA],
     "arah-alur": [renderA, bacaA], "manfaat-pita": [renderA, bacaA], "rute-jejaring": [renderA, bacaA],
@@ -425,6 +459,7 @@
     "tabel": [renderT, bacaT],
     "prestasi": [renderG, bacaG],
     "peringkat-ganda": [renderH, bacaH],
+    "peringkat": [renderO, bacaO],
     "teks": [renderI, bacaI],
     "hero": [renderJ, bacaJ],
     "tab": [renderK, bacaK],

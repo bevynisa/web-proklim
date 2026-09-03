@@ -698,14 +698,21 @@
     return '<span class="peringkat-kelas"><i class="titik" style="background:' + warna + '"></i>' + esc(kelas) + "</span>";
   }
 
+  // warna netral (biru utama situs) dipakai kalau baris tidak punya
+  // "kelas" — misalnya data yang tidak berupa tingkat risiko (suhu),
+  // biar tidak ikut memakai hijau/merah yang berarti "aman/bahaya"
+  var WARNA_NETRAL = "#2A56D6";
+
   blok.peringkat = function (b) {
     var item = b.item || [];
     if (!item.length) return "";
     var angka = function (s) { return parseFloat(String(s).replace(",", ".")) || 0; };
+    var dasar = angka(b.minimal || 0);
     var maks = b.maksimal || Math.max.apply(null, item.map(function (i) { return angka(i.nilai); }));
+    var adaKelas = item.some(function (i) { return i.kelas; });
     var baris = item.map(function (i) {
-      var persen = Math.max(4, Math.min(100, (angka(i.nilai) / maks) * 100));
-      var warna = WARNA_KELAS[i.kelas] || "#43a047";
+      var persen = Math.max(4, Math.min(100, ((angka(i.nilai) - dasar) / (maks - dasar)) * 100));
+      var warna = i.kelas ? (WARNA_KELAS[i.kelas] || "#43a047") : WARNA_NETRAL;
       return (
         '<div class="peringkat-baris">' +
           '<div class="peringkat-label">' + esc(i.label) + "</div>" +
@@ -713,13 +720,13 @@
             '<div class="peringkat-bar" data-lebar="' + persen + '" style="width:0%;background:' + warna + '"></div>' +
           "</div>" +
           '<div class="peringkat-nilai">' + esc(i.nilai) + "</div>" +
-          lencanaKelas(i.kelas) +
+          (i.kelas ? lencanaKelas(i.kelas) : "") +
         "</div>"
       );
     }).join("");
     return (
       '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) +
-      '<div class="kartu-putih peringkat-daftar">' + baris + "</div>" +
+      '<div class="kartu-putih peringkat-daftar' + (adaKelas ? "" : " peringkat-daftar-polos") + '">' + baris + "</div>" +
       "</div></section>"
     );
   };
