@@ -265,25 +265,33 @@
     return h;
   }
 
-  /* ---------- Kelompok H: peringkat-ganda (indeks kerentanan) ---------- */
+  /* ---------- Kelompok H: peringkat-ganda (indeks kerentanan, bisa 2 seri data atau lebih) ---------- */
   function renderH(kunci, k) {
-    var seri = k.seri || ["Seri 1", "Seri 2"];
+    var seri = (k.seri && k.seri.length) ? k.seri : [{ nama: "Seri 1", kode: "1" }, { nama: "Seri 2", kode: "2" }];
     var id = idBlok(kunci, "item");
-    var kolom = [
-      { key: "label", label: "Nama Dusun / Wilayah" },
-      { key: "nilai1", label: "Nilai " + seri[0], lebar: "110px" }, { key: "kelas1", label: "Kelas " + seri[0], lebar: "140px" },
-      { key: "nilai2", label: "Nilai " + seri[1], lebar: "110px" }, { key: "kelas2", label: "Kelas " + seri[1], lebar: "140px" },
-    ];
-    var itemUntukForm = (k.item || []).map(function (i) {
-      return { label: i.label, nilai1: (i.nilai || [])[0], kelas1: (i.kelas || [])[0], nilai2: (i.nilai || [])[1], kelas2: (i.kelas || [])[1] };
+    var kolom = [{ key: "label", label: "Nama Dusun / Wilayah" }];
+    seri.forEach(function (s, i) {
+      kolom.push({ key: "nilai" + i, label: "Nilai " + s.nama, lebar: "110px" });
+      kolom.push({ key: "kelas" + i, label: "Kelas " + s.nama, lebar: "140px", tipe: "select", opsi: ["Tinggi", "Sedang", "Rendah"] });
     });
+    var itemUntukForm = (k.item || []).map(function (it) {
+      var obj = { label: it.label };
+      seri.forEach(function (s, i) {
+        obj["nilai" + i] = (it.nilai || [])[i] || "";
+        obj["kelas" + i] = (it.kelas || [])[i] || "";
+      });
+      return obj;
+    });
+    var seriFields = seri.map(function (s, i) {
+      return (
+        fTeks(kunci, "seri." + i + ".nama", "Nama Kelompok Data " + (i + 1), s.nama, 'Contoh: "Longsor"') +
+        fTeks(kunci, "seri." + i + ".kode", "Kode Singkat " + (i + 1), s.kode, 'Huruf pendek, contoh "L". Dipakai di label grafik, harus beda-beda tiap kelompok biar tidak ketuker.')
+      );
+    }).join("");
     return (
       fTeks(kunci, "judul", "Judul Bagian", k.judul, "Judul yang tampil di atas tabel ini.") +
       (k.deskripsi !== undefined ? fArea(kunci, "deskripsi", "Deskripsi Singkat", k.deskripsi, "Penjelasan di bawah judul.", 70) : "") +
-      '<div class="dua-kolom">' +
-      fTeks(kunci, "seri.0", "Nama Kelompok Data 1", seri[0], 'Contoh: "Longsor"') +
-      fTeks(kunci, "seri.1", "Nama Kelompok Data 2", seri[1], 'Contoh: "Kekeringan"') +
-      "</div>" +
+      '<div class="kolom-fleksibel">' + seriFields + "</div>" +
       UI.repeaterFlat(id, "Daftar Nilai per Dusun", "Satu kartu untuk satu dusun/wilayah.", itemUntukForm, kolom, "Dusun")
     );
   }
@@ -291,10 +299,16 @@
     var h = JSON.parse(JSON.stringify(k));
     h.judul = nilaiId(idBlok(kunci, "judul"));
     if (h.deskripsi !== undefined) h.deskripsi = nilaiId(idBlok(kunci, "deskripsi"));
-    h.seri = [nilaiId(idBlok(kunci, "seri.0")), nilaiId(idBlok(kunci, "seri.1"))];
+    var jumlahSeri = (k.seri && k.seri.length) || 2;
+    h.seri = [];
+    for (var i = 0; i < jumlahSeri; i++) {
+      h.seri.push({ nama: nilaiId(idBlok(kunci, "seri." + i + ".nama")), kode: nilaiId(idBlok(kunci, "seri." + i + ".kode")) });
+    }
     var baris = UI.bacaRepeaterFlat(idBlok(kunci, "item"));
     h.item = baris.map(function (b) {
-      return { label: b.label, nilai: [b.nilai1 || "", b.nilai2 || ""], kelas: [b.kelas1 || "", b.kelas2 || ""] };
+      var nilai = [], kelas = [];
+      for (var i = 0; i < jumlahSeri; i++) { nilai.push(b["nilai" + i] || ""); kelas.push(b["kelas" + i] || ""); }
+      return { label: b.label, nilai: nilai, kelas: kelas };
     });
     return h;
   }

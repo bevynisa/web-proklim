@@ -681,13 +681,13 @@
     );
   };
 
-  // skala warna risiko: hijau (aman) -> kuning -> oranye -> merah (paling rentan)
+  // skala warna risiko: hijau (aman) -> oranye -> merah (paling rentan)
   var WARNA_KELAS = {
-    "Sangat Tinggi": "#d32f2f",
-    "Tinggi": "#f57c00",
-    "Sedang": "#d4a017",
+    "Tinggi": "#d32f2f",
+    "Sedang": "#f57c00",
     "Rendah": "#43a047",
   };
+  var URUTAN_KELAS = ["Tinggi", "Sedang", "Rendah"];
 
   function lencanaKelas(kelas) {
     var warna = WARNA_KELAS[kelas] || "#43a047";
@@ -723,21 +723,21 @@
   blok["peringkat-ganda"] = function (b) {
     var item = b.item || [];
     if (!item.length) return "";
-    var seri = b.seri || ["Seri A", "Seri B"];
+    var seri = b.seri || [{ nama: "Seri A", kode: "A" }, { nama: "Seri B", kode: "B" }];
     var angka = function (s) { return parseFloat(String(s).replace(",", ".")) || 0; };
     var maks = b.maksimal || Math.max.apply(null, item.map(function (i) {
-      return Math.max(angka(i.nilai[0]), angka(i.nilai[1]));
+      return Math.max.apply(null, (i.nilai || []).map(angka));
     }));
     var kolom = item.map(function (i) {
       var batang = seri.map(function (s, idx) {
         var nilai = i.nilai[idx], kelas = i.kelas[idx];
         var persen = Math.max(4, Math.min(100, (angka(nilai) / maks) * 100));
         var warna = WARNA_KELAS[kelas] || "#43a047";
-        var tip = "<b>" + esc(i.label) + "</b><span>" + esc(s) + ": " + esc(nilai) + "</span>" + lencanaKelas(kelas);
+        var tip = "<b>" + esc(i.label) + "</b><span>" + esc(s.nama) + ": " + esc(nilai) + "</span>" + lencanaKelas(kelas);
         return (
           '<div class="vbar-satu" data-tip="' + esc(tip) + '">' +
             '<div class="vbar-bungkus"><div class="vbar-isi" data-tinggi="' + persen + '" style="height:0%;background:' + warna + '"></div></div>' +
-            '<span class="vbar-seri">' + esc(s.slice(0, 1)) + "</span>" +
+            '<span class="vbar-seri">' + esc(s.kode) + "</span>" +
           "</div>"
         );
       }).join("");
@@ -755,9 +755,9 @@
       sumbuY += "<span>" + esc(String(nilaiTik).replace(".", ",")) + "</span>";
     }
     var seriKeterangan = seri.map(function (s) {
-      return '<span class="legenda-kotak-item legenda-seri"><b>' + esc(s.slice(0, 1)) + "</b> = " + esc(s) + "</span>";
+      return '<span class="legenda-kotak-item legenda-seri"><b>' + esc(s.kode) + "</b> = " + esc(s.nama) + "</span>";
     }).join("");
-    var legendaKelas = ["Sangat Tinggi", "Tinggi", "Sedang", "Rendah"].map(function (k) {
+    var legendaKelas = URUTAN_KELAS.map(function (k) {
       return '<span class="legenda-kotak-item"><i class="kotak" style="background:' + (WARNA_KELAS[k] || "#43a047") + '"></i>' + esc(k) + "</span>";
     }).join("");
     return (
