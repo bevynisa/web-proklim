@@ -299,6 +299,32 @@ main { padding-bottom: 60px; }
   border-radius: var(--radius); box-shadow: var(--bayang); padding: 24px;
 }
 
+/* Form Kritik & Saran */
+.tombol-isi { background: var(--grad-aksen); color: #fff; }
+.tombol-isi:hover { filter: brightness(1.06); }
+.tombol-isi:disabled { opacity: .6; cursor: not-allowed; filter: none; }
+.form-kritik { max-width: 640px; }
+.field-kritik { margin-bottom: 16px; }
+.field-kritik label {
+  display: block; font-weight: 700; font-size: 13.5px; color: var(--hijau-900);
+  margin-bottom: 6px;
+}
+.field-kritik .wajib { color: #d64545; }
+.field-kritik input, .field-kritik select, .field-kritik textarea {
+  width: 100%; border: 1px solid var(--garis); border-radius: var(--radius-sm);
+  padding: 11px 14px; font-size: 15px; font-family: inherit; color: var(--teks);
+  background: var(--putih); transition: border-color .15s;
+}
+.field-kritik input:focus, .field-kritik select:focus, .field-kritik textarea:focus {
+  outline: none; border-color: var(--hijau-500);
+}
+.field-kritik textarea { min-height: 130px; resize: vertical; }
+.ks-status {
+  margin: 14px 0 0; padding: 11px 14px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600;
+}
+.ks-status.berhasil { background: var(--hijau-50); color: var(--hijau-800); }
+.ks-status.gagal { background: #fbe4e4; color: #b91c1c; }
+
 .blok-teks p { margin: 0 0 14px; text-align: justify; }
 .blok-teks p:last-child { margin-bottom: 0; }
 

@@ -34,6 +34,7 @@
       R.footer();
       pasangGaleri();
       pasangVideo();
+      pasangFormKritikSaran();
       pasangArtikelFilter();
       pasangHeroSlideshow();
       pasangGaleriTransisi();
@@ -441,6 +442,41 @@
       setTimeout(function () { riak.remove(); }, 650);
     });
   })();
+
+  /* ---------------- FORM KRITIK & SARAN ---------------- */
+  function pasangFormKritikSaran() {
+    var form = document.getElementById("form-kritik-saran");
+    if (!form) return;
+    var tombol = document.getElementById("ks-tombol-kirim");
+    var status = document.getElementById("ks-status");
+    form.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      var pesan = document.getElementById("ks-pesan").value.trim();
+      if (!pesan) return;
+      tombol.disabled = true;
+      tombol.textContent = "Mengirim...";
+      status.style.display = "none";
+      try {
+        await S.kirimKritikSaran({
+          nama: document.getElementById("ks-nama").value,
+          kontak: document.getElementById("ks-kontak").value,
+          kategori: document.getElementById("ks-kategori").value,
+          pesan: pesan,
+        });
+        form.reset();
+        status.className = "ks-status berhasil";
+        status.textContent = "Terima kasih! Masukan kamu sudah kami terima.";
+        status.style.display = "";
+      } catch (err) {
+        status.className = "ks-status gagal";
+        status.textContent = "Gagal mengirim: " + err.message + " — coba lagi sebentar lagi.";
+        status.style.display = "";
+      } finally {
+        tombol.disabled = false;
+        tombol.textContent = "Kirim Masukan";
+      }
+    });
+  }
 
   /* ---------------- GALERI: FILTER + LIGHTBOX ---------------- */
   // tampilkan foto sesuai kategori — langsung tampil, tanpa animasi/jeda

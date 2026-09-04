@@ -15,6 +15,7 @@ var IKON_SVG = {
   "data-aksi": '<path d="M4 20V10M12 20V4M20 20v-7"/>',
   artikel: '<rect x="4" y="4" width="16" height="16" rx="1"/><path d="M8 8h8M8 12h8M8 16h5"/>',
   galeri: '<rect x="3" y="4" width="18" height="14" rx="1"/><circle cx="8.5" cy="9.5" r="1.5"/><path d="M21 15l-5-5-4 4-3-3-6 6"/>',
+  "kritik-saran": '<path d="M4 4h16v12H8l-4 4z"/><path d="M12 8v4M12 15h.01"/>',
 };
 function ikonSvg(id) {
   return '<svg class="ikon-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + (IKON_SVG[id] || "") + "</svg>";
@@ -38,4 +39,5 @@ window.MENU = [
   { id: "data-aksi", label: "Data Aksi", tipe: "halaman", halaman: "data-aksi" },
   { id: "artikel", label: "Artikel", tipe: "artikel" },
   { id: "galeri", label: "Galeri Foto", tipe: "galeri" },
+  { id: "kritik-saran", label: "Kritik & Saran", tipe: "kritik-saran" },
 ].map(function (m) { m.ikon = ikonSvg(m.id); return m; });

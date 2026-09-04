@@ -34,6 +34,7 @@
     { id: "m-data-aksi", label: "Data Aksi", halaman: "data-aksi" },
     { id: "m-artikel", label: "Artikel", halaman: "artikel" },
     { id: "m-galeri", label: "Galeri", halaman: "galeri" },
+    { id: "m-kritik-saran", label: "Kritik & Saran", halaman: "kritik-saran" },
   ];
 
   // ikon & judul/subjudul tiap halaman — bagian tetap situs, bukan konten
@@ -82,6 +83,10 @@
     galeri: {
       ikon: "🖼️", judul: "Galeri",
       subjudul: "Dokumentasi kegiatan adaptasi, mitigasi, dan kelembagaan ProKlim Desa Sanggang.",
+    },
+    "kritik-saran": {
+      ikon: "💬", judul: "Kritik & Saran",
+      subjudul: "Sampaikan masukan, kritik, atau saran kamu untuk kemajuan ProKlim Desa Sanggang. Masukan kamu akan langsung diterima oleh pengurus.",
     },
   };
 
@@ -182,6 +187,11 @@
       { id: "data-aksi", ikon: META_HALAMAN["data-aksi"].ikon, judul: META_HALAMAN["data-aksi"].judul, subjudul: META_HALAMAN["data-aksi"].subjudul, blok: blok("data-aksi") },
       { id: "artikel", ikon: META_HALAMAN.artikel.ikon, judul: META_HALAMAN.artikel.judul, subjudul: META_HALAMAN.artikel.subjudul, blok: [{ tipe: "daftar-artikel" }] },
       { id: "galeri", ikon: META_HALAMAN.galeri.ikon, judul: META_HALAMAN.galeri.judul, subjudul: META_HALAMAN.galeri.subjudul, blok: [{ tipe: "galeri-penuh", video: videoMitigasi }] },
+      {
+        id: "kritik-saran", ikon: META_HALAMAN["kritik-saran"].ikon, judul: META_HALAMAN["kritik-saran"].judul,
+        subjudul: META_HALAMAN["kritik-saran"].subjudul,
+        blok: [{ tipe: "form-kritik-saran", judul: "Pojok Kritik & Saran" }],
+      },
     ];
   }
 
@@ -276,6 +286,21 @@
         if (g.kategori && set.indexOf(g.kategori) === -1) set.push(g.kategori);
       });
       return set;
+    },
+
+    // kirim masukan dari form "Pojok Kritik & Saran" — satu-satunya
+    // tempat situs publik ini MENULIS ke database (semua yang lain
+    // cuma membaca); admin membacanya lewat dashboard
+    kirimKritikSaran: async function (data) {
+      if (!db) throw new Error("Belum terhubung ke database.");
+      var r = await db.from("kritik_saran").insert({
+        nama: (data.nama || "").trim() || null,
+        kontak: (data.kontak || "").trim() || null,
+        kategori: data.kategori || null,
+        pesan: (data.pesan || "").trim(),
+      });
+      if (r.error) throw new Error(r.error.message);
+      return true;
     },
   };
 

@@ -295,6 +295,18 @@ table.daftar img.mini { width: 52px; height: 40px; object-fit: cover; border-rad
 .kartu-foto .isi .judul { font-size: .82rem; font-weight: 600; margin: 2px 0 8px; }
 .kartu-foto .isi .aksi-baris { justify-content: flex-end; }
 
+.daftar-kritik { display: flex; flex-direction: column; gap: 10px; }
+.kartu-kritik { background: #fff; border: 1px solid var(--garis); border-radius: var(--radius-sm); padding: 14px 16px; }
+.kartu-kritik.belum-dibaca { border-left: 4px solid var(--hijau-600); background: var(--hijau-50); }
+.kritik-atas { display: flex; justify-content: space-between; align-items: flex-start; gap: 10px; flex-wrap: wrap; margin-bottom: 6px; }
+.kritik-siapa { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.kritik-siapa strong { font-size: .92rem; }
+.kritik-siapa .cap { font-size: .68rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--hijau-100); color: var(--hijau-800); }
+.kritik-siapa .cap-baru { background: var(--kulit-tint); color: var(--kulit-500); }
+.kritik-tanggal { font-size: .76rem; color: var(--teks-lembut); white-space: nowrap; }
+.kritik-pesan { margin: 4px 0 6px; font-size: .9rem; line-height: 1.5; white-space: pre-wrap; }
+.kritik-kontak { margin: 0 0 8px; font-size: .8rem; color: var(--teks-lembut); }
+
 .kosong {
   text-align: center;
   color: var(--teks-lembut);

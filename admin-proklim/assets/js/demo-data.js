@@ -3,7 +3,7 @@
    warna placeholder. Dipakai HANYA saat assets/js/config.js belum diisi
    kunci Supabase sungguhan. Jangan diedit manual. */
 window.PROKLIM_DEMO = {
-  "versi": 51,
+  "versi": 52,
   "situs": {
     "nama": "ProKlim Desa Sanggang",
     "jargon": "Sanggang Berkreasi",
@@ -2060,5 +2060,6 @@ window.PROKLIM_DEMO = {
       "keterangan": "Dokumentasi kegiatan kelembagaan ProKlim Desa Sanggang — Kelembagaan, Kebijakan & Partisipasi.",
       "urutan": 5
     }
-  ]
+  ],
+  "kritik_saran": []
 };

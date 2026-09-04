@@ -113,6 +113,20 @@
         var dataUrl = await UI.bacaFileGambar(file);
         return tunda(dataUrl);
       },
+
+      async listKritikSaran() {
+        var d = muat();
+        return tunda(d.kritik_saran.slice().sort(function (a, b) { return (b.dibuat_pada || "").localeCompare(a.dibuat_pada || ""); }));
+      },
+      async tandaiDibacaKritikSaran(id, dibaca) {
+        var d = muat(); var i = d.kritik_saran.findIndex(function (x) { return x.id === id; });
+        if (i >= 0) d.kritik_saran[i].dibaca = dibaca;
+        simpan(d); return tunda(true);
+      },
+      async deleteKritikSaran(id) {
+        var d = muat(); d.kritik_saran = d.kritik_saran.filter(function (x) { return x.id !== id; }); simpan(d);
+        return tunda(true);
+      },
     };
   })();
 
@@ -199,6 +213,19 @@
         var r = await db().storage.from(bucket).upload(namaFile, file, { upsert: false });
         lempar(r.error, "Unggah gambar");
         return db().storage.from(bucket).getPublicUrl(namaFile).data.publicUrl;
+      },
+
+      async listKritikSaran() {
+        var r = await db().from("kritik_saran").select("*").order("dibuat_pada", { ascending: false });
+        lempar(r.error, "Ambil kritik & saran"); return r.data;
+      },
+      async tandaiDibacaKritikSaran(id, dibaca) {
+        var r = await db().from("kritik_saran").update({ dibaca: dibaca }).eq("id", id);
+        lempar(r.error, "Tandai kritik & saran"); return true;
+      },
+      async deleteKritikSaran(id) {
+        var r = await db().from("kritik_saran").delete().eq("id", id);
+        lempar(r.error, "Hapus kritik & saran"); return true;
       },
     };
   })();

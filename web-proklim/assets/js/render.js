@@ -1111,6 +1111,35 @@
     );
   };
 
+  /* =============== FORM KRITIK & SARAN =============== */
+  blok["form-kritik-saran"] = function (b) {
+    return (
+      '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) +
+      '<div class="kartu-putih form-kritik">' +
+        '<form id="form-kritik-saran">' +
+          '<div class="dua-kolom">' +
+            '<div class="field-kritik"><label for="ks-nama">Nama (boleh dikosongkan)</label>' +
+              '<input type="text" id="ks-nama" placeholder="Nama kamu" maxlength="100"></div>' +
+            '<div class="field-kritik"><label for="ks-kontak">Kontak (boleh dikosongkan)</label>' +
+              '<input type="text" id="ks-kontak" placeholder="No. WA atau email" maxlength="120"></div>' +
+          "</div>" +
+          '<div class="field-kritik"><label for="ks-kategori">Jenis Masukan</label>' +
+            '<select id="ks-kategori">' +
+              '<option value="Saran">Saran</option>' +
+              '<option value="Kritik">Kritik</option>' +
+              '<option value="Pertanyaan">Pertanyaan</option>' +
+              '<option value="Lainnya">Lainnya</option>' +
+            "</select></div>" +
+          '<div class="field-kritik"><label for="ks-pesan">Pesan <span class="wajib">*</span></label>' +
+            '<textarea id="ks-pesan" required maxlength="2000" placeholder="Tulis kritik, saran, atau pertanyaan kamu di sini..."></textarea></div>' +
+          '<button type="submit" class="tombol tombol-isi" id="ks-tombol-kirim">Kirim Masukan</button>' +
+          '<p id="ks-status" class="ks-status" style="display:none"></p>' +
+        "</form>" +
+      "</div>" +
+      "</div></section>"
+    );
+  };
+
   /* =============== BANNER KELEMBAGAAN (khusus 8 sub-halaman menu Kelembagaan) =============== */
   // ikon garis (bukan emoji) untuk header tiap sub-halaman Kelembagaan
   var IKON_KLB = {
