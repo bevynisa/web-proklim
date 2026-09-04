@@ -591,30 +591,34 @@ a.kartu:hover { transform: translateY(-3px); box-shadow: var(--bayang-kuat); }
 .rencana-target { background: var(--hijau-50); color: var(--hijau-800); border-color: var(--hijau-200); }
 .rencana-target b { background: var(--hijau-800); }
 .rencana-pj { background: #EFF8EE; color: var(--hijau-600); border-color: #CDE9CC; }
-.rencana-lampiran { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--garis); }
-.rencana-lampiran-tautan {
-  display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700;
-  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--hijau-200);
-  background: var(--hijau-50); color: var(--hijau-800); text-decoration: none;
-  transition: background .15s, border-color .15s;
-}
-.rencana-lampiran-tautan svg { width: 14px; height: 14px; flex-shrink: 0; }
-.rencana-lampiran-tautan:hover { background: var(--hijau-100); border-color: var(--hijau-500); }
+/* Lampiran Dokumen — sengaja dibuat beda gaya dari tag Target/PJ di atas
+   (bukan pil bulat, tapi kartu berkas persegi rounded, bersusun ke bawah)
+   supaya jelas kelihatan ini bagian terpisah: daftar berkas yang bisa
+   diklik, bukan info ringkas seperti target/penanggung jawab */
 .rencana-pj b { background: var(--hijau-600); }
-.rencana-lampiran-grup { display: block; }
-.rencana-lampiran-grup summary {
-  display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700;
-  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--hijau-200);
-  background: var(--hijau-50); color: var(--hijau-800); cursor: pointer; list-style: none;
-  transition: background .15s, border-color .15s;
+.rencana-lampiran {
+  display: flex; flex-direction: column; gap: 7px; margin-top: 14px; padding-top: 14px;
+  border-top: 1px dashed var(--garis);
 }
-.rencana-lampiran-grup summary::-webkit-details-marker { display: none; }
-.rencana-lampiran-grup summary::after { content: "▾"; margin-left: 2px; font-size: 10px; }
-.rencana-lampiran-grup[open] summary::after { content: "▴"; }
-.rencana-lampiran-grup summary svg { width: 14px; height: 14px; flex-shrink: 0; }
-.rencana-lampiran-grup summary:hover { background: var(--hijau-100); border-color: var(--hijau-500); }
-.rencana-lampiran-grup[open] summary { margin-bottom: 8px; }
-.rencana-lampiran-daftar { display: flex; flex-wrap: wrap; gap: 8px; }
+.rencana-lampiran-label {
+  font-size: 10.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em;
+  color: var(--teks-lemah, #6b7d70); margin-bottom: 1px;
+}
+.rencana-lampiran-tautan {
+  display: flex; align-items: center; gap: 10px; font-size: 13.5px; font-weight: 700;
+  padding: 9px 12px; border-radius: var(--radius-sm); border: 1px solid var(--garis);
+  background: var(--putih); color: var(--teks); text-decoration: none;
+  transition: background .15s, border-color .15s, transform .12s;
+}
+.rencana-lampiran-tautan:hover { background: var(--hijau-50); border-color: var(--hijau-500); transform: translateX(2px); }
+.rencana-lampiran-ikon {
+  width: 30px; height: 30px; border-radius: 8px; background: var(--hijau-50); color: var(--hijau-800);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.rencana-lampiran-ikon svg { width: 16px; height: 16px; }
+.rencana-lampiran-nama { flex: 1; }
+.rencana-lampiran-panah { color: var(--hijau-500); font-size: 13px; opacity: .7; }
+.rencana-lampiran-tautan:hover .rencana-lampiran-panah { opacity: 1; }
 @media (max-width: 980px) {
   .rencana-daftar { grid-template-columns: repeat(2, 1fr); }
 }
