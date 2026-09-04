@@ -1129,9 +1129,29 @@
         (itemVideo.length ? '<button class="pil" data-kat="__video__">Video (' + itemVideo.length + ")</button>" : "") +
       "</div>";
 
+    // dikelompokkan per komponen (field "judul", mis. "Peresapan Air") di dalam
+    // tiap kategori — bukan cuma ditumpuk rata dalam satu grid besar, supaya
+    // gampang cari foto berdasarkan komponen aksi tertentu
+    var kelompok = [], indeksKelompok = {};
+    semua.forEach(function (g, i) {
+      var kunci = (g.kategori || "") + "||" + (g.judul || "");
+      if (!indeksKelompok[kunci]) {
+        indeksKelompok[kunci] = { kategori: g.kategori, judul: g.judul, item: [] };
+        kelompok.push(indeksKelompok[kunci]);
+      }
+      indeksKelompok[kunci].item.push({ g: g, i: i });
+    });
+
     var gridFoto = !semua.length
       ? '<div class="kosong-galeri"><div class="ikon-kosong">🖼️</div><p>Belum ada foto. Tambahkan lewat halaman Admin.</p></div>'
-      : '<div class="galeri-masonry" id="grid-galeri">' + semua.map(function (g, i) { return selFoto(g, i); }).join("") + "</div>";
+      : '<div id="grid-galeri">' + kelompok.map(function (kel) {
+          return (
+            '<div class="galeri-kelompok" data-kat="' + esc(kel.kategori || "") + '">' +
+              (kel.judul ? '<h3 class="galeri-kelompok-judul">' + esc(kel.judul) + ' <span class="galeri-kelompok-jumlah">(' + kel.item.length + ")</span></h3>" : "") +
+              '<div class="galeri-masonry">' + kel.item.map(function (p) { return selFoto(p.g, p.i); }).join("") + "</div>" +
+            "</div>"
+          );
+        }).join("") + "</div>";
 
     var gridVideo = itemVideo.length
       ? '<div class="grid-video" id="grid-galeri-video" style="display:none">' + itemVideo.map(kartuVideo).join("") + "</div>"

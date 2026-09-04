@@ -486,9 +486,9 @@
   /* ---------------- GALERI: FILTER + LIGHTBOX ---------------- */
   // tampilkan foto sesuai kategori — langsung tampil, tanpa animasi/jeda
   function tampilkanGaleri(grid, kat) {
-    grid.querySelectorAll(".foto").forEach(function (f) {
-      var cocok = !kat || f.getAttribute("data-kat") === kat;
-      f.style.display = cocok ? "" : "none";
+    grid.querySelectorAll(".galeri-kelompok").forEach(function (kel) {
+      var cocok = !kat || kel.getAttribute("data-kat") === kat;
+      kel.style.display = cocok ? "" : "none";
     });
   }
 

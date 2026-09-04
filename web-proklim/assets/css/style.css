@@ -1478,6 +1478,20 @@ table.tabel.kolom-akhir-lebar td:last-child, table.tabel.kolom-akhir-lebar th:la
 }
 .kosong-galeri .ikon-kosong { font-size: 44px; opacity: .45; margin-bottom: 10px; }
 
+/* Galeri lengkap — dikelompokkan per komponen aksi, tiap kelompok punya judul
+   kecil sendiri sebelum grid mosaik fotonya */
+.galeri-kelompok { margin-bottom: 34px; }
+.galeri-kelompok:last-child { margin-bottom: 0; }
+.galeri-kelompok-judul {
+  display: flex; align-items: center; gap: 9px;
+  font-size: 16px; font-weight: 800; color: var(--hijau-900); margin: 0 0 14px;
+}
+.galeri-kelompok-judul::before {
+  content: ""; width: 4px; height: 18px; border-radius: 3px;
+  background: linear-gradient(var(--teal-500), var(--hijau-700)); flex-shrink: 0;
+}
+.galeri-kelompok-jumlah { font-weight: 600; color: var(--teks-lembut); font-size: 13.5px; }
+
 /* Galeri lengkap — tata letak mosaik dinamis (sebagian tile lebih tinggi) */
 .galeri-masonry {
   display: grid;
