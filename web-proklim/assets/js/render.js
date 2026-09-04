@@ -71,9 +71,25 @@
   var R = {};
 
   /* =============== HEADER =============== */
+  // cari label menu yang cocok dengan halaman aktif saat ini — dipakai
+  // supaya pas menu diciutkan jadi tombol hamburger (layar sempit), warga
+  // tetap tahu sedang buka halaman apa tanpa harus buka menunya dulu
+  function labelHalamanAktif(rutaAktif, menuList) {
+    for (var i = 0; i < menuList.length; i++) {
+      var m = menuList[i];
+      if (m.halaman === rutaAktif) return m.label;
+      if (m.anak) {
+        var a = m.anak.find(function (x) { return x.halaman === rutaAktif; });
+        if (a) return a.label;
+      }
+    }
+    return "";
+  }
+
   R.header = function (rutaAktif) {
     var s = S.data.situs;
     var el = document.getElementById("situs-header");
+    var labelAktif = labelHalamanAktif(rutaAktif, S.data.menu);
     var menu = S.data.menu.map(function (m) {
       var punyaAnak = m.anak && m.anak.length;
       if (punyaAnak) {
@@ -103,7 +119,10 @@
             '<span class="jargon">' + esc(s.jargon) + "</span>" +
           "</span>" +
         "</a>" +
-        '<button class="tombol-menu" id="tombol-menu" aria-label="Buka menu">☰</button>' +
+        '<div class="status-nav-mobile">' +
+          (labelAktif ? '<span class="halaman-aktif-pil"><span class="titik-aktif"></span><span class="halaman-aktif-nama">' + esc(labelAktif) + "</span></span>" : "") +
+          '<button class="tombol-menu" id="tombol-menu" aria-label="Buka menu">☰</button>' +
+        "</div>" +
         '<nav class="nav-utama" id="nav-utama"><ul class="nav-daftar">' + menu + "</ul></nav>" +
       "</div>";
 

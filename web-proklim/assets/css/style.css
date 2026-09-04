@@ -160,14 +160,42 @@ li.buka > .submenu { display: block; }
 .submenu a:hover { background: var(--hijau-50); color: var(--hijau-700); }
 .submenu a.aktif { background: var(--hijau-100); color: var(--hijau-800); font-weight: 600; }
 
+.status-nav-mobile { display: none; margin-left: auto; align-items: center; gap: 10px; }
 .tombol-menu {
-  display: none; margin-left: auto;
+  display: none; flex-shrink: 0;
   background: var(--hijau-700); color: #fff; border: 0;
   width: 44px; height: 44px; border-radius: 11px;
   font-size: 20px; cursor: pointer;
 }
+/* pil "sedang di halaman ini" — muncul di samping tombol hamburger supaya
+   warga tetap tahu sedang buka halaman apa walau menunya sudah diciutkan */
+.halaman-aktif-pil {
+  display: inline-flex; align-items: center; gap: 7px; min-width: 0;
+  padding: 8px 16px 8px 12px; border-radius: 999px;
+  background: var(--grad-aksen); color: #fff;
+  font-size: 13.5px; font-weight: 700;
+  box-shadow: 0 3px 10px rgba(15, 61, 36, .18);
+  max-width: 42vw;
+}
+.halaman-aktif-nama { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.titik-aktif {
+  width: 7px; height: 7px; border-radius: 50%; background: #fff; flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, .3);
+}
+/* layar sempit: nama situs + jargon + pil halaman + tombol menu sekaligus
+   tidak muat berdampingan — jargon disembunyikan & nama boleh terpotong
+   duluan (logo tetap utuh) supaya pil "sedang di halaman ini" tetap
+   kebaca, bukan malah ke luar layar */
+@media (max-width: 480px) {
+  .merek { flex-shrink: 1; min-width: 0; }
+  .merek-teks { min-width: 0; }
+  .merek-nama { overflow: hidden; text-overflow: ellipsis; }
+  .merek .jargon { display: none; }
+  .halaman-aktif-pil { max-width: 30vw; padding: 7px 12px 7px 10px; font-size: 12.5px; }
+}
 
 @media (max-width: 940px) {
+  .status-nav-mobile { display: flex; }
   .tombol-menu { display: block; }
   .nav-utama {
     display: none; position: absolute; top: 100%; left: 0; right: 0;
@@ -1685,6 +1713,7 @@ a.tbl-abu { color: var(--teks); }
    hamburger di lebar layar yang lebih besar dari titik patah umum
    lain di halaman ini, supaya tidak sesak/tumpang tindih. */
 @media (max-width: 1480px) {
+  .status-nav-mobile { display: flex; }
   .tombol-menu { display: block; }
   .nav-utama {
     display: none; position: absolute; top: 100%; left: 0; right: 0;
