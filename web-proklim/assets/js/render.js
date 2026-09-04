@@ -350,10 +350,14 @@
                 (i.pj ? '<span class="rencana-tag rencana-pj"><b>PJ</b>' + esc(i.pj) + "</span>" : "") +
               "</div>"
             : "") +
-          (lampiran.length
-            ? '<div class="rencana-lampiran">' + lampiran.map(function (l) {
-                return '<a class="rencana-lampiran-tautan" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + IKON_PDF_SVG + esc(l.label) + "</a>";
-              }).join("") + "</div>"
+          (lampiran.length === 1
+            ? '<div class="rencana-lampiran"><a class="rencana-lampiran-tautan" href="' + esc(lampiran[0].url) + '" target="_blank" rel="noopener">' + IKON_PDF_SVG + esc(lampiran[0].label) + "</a></div>"
+            : lampiran.length > 1
+            ? '<details class="rencana-lampiran rencana-lampiran-grup"><summary>' + IKON_PDF_SVG + "Dokumen Lampiran (" + lampiran.length + ")</summary>" +
+                '<div class="rencana-lampiran-daftar">' + lampiran.map(function (l) {
+                  return '<a class="rencana-lampiran-tautan" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + IKON_PDF_SVG + esc(l.label) + "</a>";
+                }).join("") + "</div>" +
+              "</details>"
             : "") +
         "</div>"
       );

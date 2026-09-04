@@ -119,6 +119,14 @@
     if (kolom.tipe === "textarea") {
       return '<textarea data-k="' + kolom.key + '" rows="2" placeholder="' + esc(kolom.placeholder || "") + '">' + esc(nilaiSekarang) + "</textarea>";
     }
+    if (kolom.tipe === "grup") {
+      return '<div class="sel-grup">' + (kolom.sub || []).map(function (sk) {
+        return '<div class="sel-grup-baris">' +
+          (sk.label ? '<span class="sel-grup-label">' + esc(sk.label) + "</span>" : "") +
+          selKolom(item, sk) +
+        "</div>";
+      }).join("") + "</div>";
+    }
     return '<input type="text" data-k="' + kolom.key + '" value="' + esc(nilaiSekarang) + '" placeholder="' + esc(kolom.placeholder || "") + '">';
   }
 
@@ -155,9 +163,11 @@
       var obj = Object.assign({}, dasar);
       var adaIsi = false;
       kolom.forEach(function (k) {
-        var el = baris.querySelector('[data-k="' + k.key + '"]');
-        var v = el ? el.value.trim() : "";
-        if (v) { obj[k.key] = v; adaIsi = true; } else { delete obj[k.key]; }
+        (k.tipe === "grup" ? k.sub || [] : [k]).forEach(function (sk) {
+          var el = baris.querySelector('[data-k="' + sk.key + '"]');
+          var v = el ? el.value.trim() : "";
+          if (v) { obj[sk.key] = v; adaIsi = true; } else { delete obj[sk.key]; }
+        });
       });
       return adaIsi ? obj : null;
     }).filter(Boolean);

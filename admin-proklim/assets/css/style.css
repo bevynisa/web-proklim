@@ -378,6 +378,11 @@ table.tabel-repeater textarea { min-height: 34px; resize: vertical; line-height:
 .sel-dokumen a:hover { text-decoration: underline; }
 .sel-dokumen input[type=file] { font-size: .74rem; max-width: 150px; }
 
+.sel-grup { display: flex; flex-direction: column; gap: 8px; min-width: 200px; }
+.sel-grup-baris { display: flex; flex-direction: column; gap: 3px; padding-bottom: 8px; border-bottom: 1px dashed var(--garis); }
+.sel-grup-baris:last-child { border-bottom: none; padding-bottom: 0; }
+.sel-grup-label { font-size: .68rem; font-weight: 700; color: var(--abu-600, #6b7280); text-transform: uppercase; letter-spacing: .02em; }
+
 /* kelompok bertingkat: akordeon/tab/evaluasi (kelompok berisi tabel kecil di dalamnya) */
 .daftar-kelompok { display: flex; flex-direction: column; }
 .kelompok-item { border-top: 1px solid var(--garis); padding: 14px 0; }

@@ -601,6 +601,20 @@ a.kartu:hover { transform: translateY(-3px); box-shadow: var(--bayang-kuat); }
 .rencana-lampiran-tautan svg { width: 14px; height: 14px; flex-shrink: 0; }
 .rencana-lampiran-tautan:hover { background: var(--hijau-100); border-color: var(--hijau-500); }
 .rencana-pj b { background: var(--hijau-600); }
+.rencana-lampiran-grup { display: block; }
+.rencana-lampiran-grup summary {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700;
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--hijau-200);
+  background: var(--hijau-50); color: var(--hijau-800); cursor: pointer; list-style: none;
+  transition: background .15s, border-color .15s;
+}
+.rencana-lampiran-grup summary::-webkit-details-marker { display: none; }
+.rencana-lampiran-grup summary::after { content: "▾"; margin-left: 2px; font-size: 10px; }
+.rencana-lampiran-grup[open] summary::after { content: "▴"; }
+.rencana-lampiran-grup summary svg { width: 14px; height: 14px; flex-shrink: 0; }
+.rencana-lampiran-grup summary:hover { background: var(--hijau-100); border-color: var(--hijau-500); }
+.rencana-lampiran-grup[open] summary { margin-bottom: 8px; }
+.rencana-lampiran-daftar { display: flex; flex-wrap: wrap; gap: 8px; }
 @media (max-width: 980px) {
   .rencana-daftar { grid-template-columns: repeat(2, 1fr); }
 }
