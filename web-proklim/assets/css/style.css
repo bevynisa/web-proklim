@@ -299,12 +299,31 @@ main { padding-bottom: 60px; }
   border-radius: var(--radius); box-shadow: var(--bayang); padding: 24px;
 }
 
-/* Form Kritik & Saran */
+/* Form Kritik & Saran — panel ganda: info (kiri) + form (kanan), rata
+   penuh kiri-kanan mengikuti lebar wadah, bukan kartu sempit di tengah */
 .tombol-isi { background: var(--grad-aksen); color: #fff; }
 .tombol-isi:hover { filter: brightness(1.06); }
 .tombol-isi:disabled { opacity: .6; cursor: not-allowed; filter: none; }
-.form-kritik { max-width: 640px; }
-.field-kritik { margin-bottom: 16px; }
+
+.kritik-panel {
+  display: grid; grid-template-columns: 320px 1fr;
+  border-radius: var(--radius); overflow: hidden; box-shadow: var(--bayang-kuat);
+}
+.kritik-info {
+  background: var(--grad-aksen); color: #fff; padding: 40px 32px;
+  display: flex; flex-direction: column; justify-content: center; gap: 14px;
+}
+.kritik-info-ikon {
+  width: 52px; height: 52px; border-radius: 14px; background: rgba(255, 255, 255, .18);
+  display: flex; align-items: center; justify-content: center;
+}
+.kritik-info-ikon svg { width: 28px; height: 28px; }
+.kritik-info h3 { margin: 0; font-size: 21px; line-height: 1.3; }
+.kritik-info p { margin: 0; font-size: 14.5px; line-height: 1.75; opacity: .95; text-align: justify; }
+
+.kritik-form-wadah { background: var(--putih); padding: 34px 36px; }
+.grid-kritik { display: grid; grid-template-columns: 1fr 1fr; gap: 18px 22px; margin-bottom: 22px; }
+.field-kritik-lebar { grid-column: 1 / -1; }
 .field-kritik label {
   display: block; font-weight: 700; font-size: 13.5px; color: var(--hijau-900);
   margin-bottom: 6px;
@@ -318,12 +337,20 @@ main { padding-bottom: 60px; }
 .field-kritik input:focus, .field-kritik select:focus, .field-kritik textarea:focus {
   outline: none; border-color: var(--hijau-500);
 }
-.field-kritik textarea { min-height: 130px; resize: vertical; }
+.field-kritik textarea { min-height: 140px; resize: vertical; }
 .ks-status {
   margin: 14px 0 0; padding: 11px 14px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 600;
 }
 .ks-status.berhasil { background: var(--hijau-50); color: var(--hijau-800); }
 .ks-status.gagal { background: #fbe4e4; color: #b91c1c; }
+@media (max-width: 860px) {
+  .kritik-panel { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .grid-kritik { grid-template-columns: 1fr; }
+  .kritik-form-wadah { padding: 26px 20px; }
+  .kritik-info { padding: 30px 24px; }
+}
 
 .blok-teks p { margin: 0 0 14px; text-align: justify; }
 .blok-teks p:last-child { margin-bottom: 0; }

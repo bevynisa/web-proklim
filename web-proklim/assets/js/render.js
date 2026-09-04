@@ -1112,29 +1112,42 @@
   };
 
   /* =============== FORM KRITIK & SARAN =============== */
+  var IKON_KRITIK_SVG =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>' +
+    '<path d="M8 10h8M8 13.5h5"/></svg>';
+
   blok["form-kritik-saran"] = function (b) {
     return (
       '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) +
-      '<div class="kartu-putih form-kritik">' +
-        '<form id="form-kritik-saran">' +
-          '<div class="dua-kolom">' +
-            '<div class="field-kritik"><label for="ks-nama">Nama (boleh dikosongkan)</label>' +
-              '<input type="text" id="ks-nama" placeholder="Nama kamu" maxlength="100"></div>' +
-            '<div class="field-kritik"><label for="ks-kontak">Kontak (boleh dikosongkan)</label>' +
-              '<input type="text" id="ks-kontak" placeholder="No. WA atau email" maxlength="120"></div>' +
-          "</div>" +
-          '<div class="field-kritik"><label for="ks-kategori">Jenis Masukan</label>' +
-            '<select id="ks-kategori">' +
-              '<option value="Saran">Saran</option>' +
-              '<option value="Kritik">Kritik</option>' +
-              '<option value="Pertanyaan">Pertanyaan</option>' +
-              '<option value="Lainnya">Lainnya</option>' +
-            "</select></div>" +
-          '<div class="field-kritik"><label for="ks-pesan">Pesan <span class="wajib">*</span></label>' +
-            '<textarea id="ks-pesan" required maxlength="2000" placeholder="Tulis kritik, saran, atau pertanyaan kamu di sini..."></textarea></div>' +
-          '<button type="submit" class="tombol tombol-isi" id="ks-tombol-kirim">Kirim Masukan</button>' +
-          '<p id="ks-status" class="ks-status" style="display:none"></p>' +
-        "</form>" +
+      '<div class="kritik-panel">' +
+        '<div class="kritik-info">' +
+          '<div class="kritik-info-ikon">' + IKON_KRITIK_SVG + "</div>" +
+          "<h3>Suara Anda, Kemajuan Bersama</h3>" +
+          "<p>Pemerintah Desa dan Tim ProKlim Desa Sanggang membuka ruang bagi Bapak/Ibu/Saudara/i untuk menyampaikan kritik, saran, maupun pertanyaan seputar pelaksanaan Program Kampung Iklim. Setiap masukan yang disampaikan akan menjadi bahan evaluasi dan perbaikan program ke depan.</p>" +
+        "</div>" +
+        '<div class="kritik-form-wadah">' +
+          '<form id="form-kritik-saran" novalidate>' +
+            '<div class="grid-kritik">' +
+              '<div class="field-kritik"><label for="ks-nama">Nama Lengkap <span class="wajib">*</span></label>' +
+                '<input type="text" id="ks-nama" required placeholder="Nama lengkap Anda" maxlength="100"></div>' +
+              '<div class="field-kritik"><label for="ks-kontak">Nomor WhatsApp / Alamat Email <span class="wajib">*</span></label>' +
+                '<input type="text" id="ks-kontak" required placeholder="Contoh: 0812xxxxxxxx" maxlength="120"></div>' +
+              '<div class="field-kritik"><label for="ks-kategori">Jenis Masukan <span class="wajib">*</span></label>' +
+                '<select id="ks-kategori" required>' +
+                  '<option value="">Pilih jenis masukan</option>' +
+                  '<option value="Saran">Saran</option>' +
+                  '<option value="Kritik">Kritik</option>' +
+                  '<option value="Pertanyaan">Pertanyaan</option>' +
+                  '<option value="Lainnya">Lainnya</option>' +
+                "</select></div>" +
+              '<div class="field-kritik field-kritik-lebar"><label for="ks-pesan">Isi Masukan <span class="wajib">*</span></label>' +
+                '<textarea id="ks-pesan" required maxlength="2000" placeholder="Sampaikan kritik, saran, atau pertanyaan Anda secara jelas dan sopan."></textarea></div>' +
+            "</div>" +
+            '<button type="submit" class="tombol tombol-isi" id="ks-tombol-kirim">Kirim Masukan</button>' +
+            '<p id="ks-status" class="ks-status" style="display:none"></p>' +
+          "</form>" +
+        "</div>" +
       "</div>" +
       "</div></section>"
     );

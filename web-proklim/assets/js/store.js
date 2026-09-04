@@ -86,7 +86,7 @@
     },
     "kritik-saran": {
       ikon: "💬", judul: "Kritik & Saran",
-      subjudul: "Sampaikan masukan, kritik, atau saran kamu untuk kemajuan ProKlim Desa Sanggang. Masukan kamu akan langsung diterima oleh pengurus.",
+      subjudul: "Sampaikan kritik, saran, atau pertanyaan Anda demi kemajuan Program Kampung Iklim Desa Sanggang. Setiap masukan akan diterima langsung oleh pengurus.",
     },
   };
 

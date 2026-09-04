@@ -451,25 +451,30 @@
     var status = document.getElementById("ks-status");
     form.addEventListener("submit", async function (e) {
       e.preventDefault();
+      var nama = document.getElementById("ks-nama").value.trim();
+      var kontak = document.getElementById("ks-kontak").value.trim();
+      var kategori = document.getElementById("ks-kategori").value;
       var pesan = document.getElementById("ks-pesan").value.trim();
-      if (!pesan) return;
+
+      if (!nama || !kontak || !kategori || !pesan) {
+        status.className = "ks-status gagal";
+        status.textContent = "Mohon lengkapi seluruh kolom yang wajib diisi sebelum mengirimkan masukan.";
+        status.style.display = "";
+        return;
+      }
+
       tombol.disabled = true;
       tombol.textContent = "Mengirim...";
       status.style.display = "none";
       try {
-        await S.kirimKritikSaran({
-          nama: document.getElementById("ks-nama").value,
-          kontak: document.getElementById("ks-kontak").value,
-          kategori: document.getElementById("ks-kategori").value,
-          pesan: pesan,
-        });
+        await S.kirimKritikSaran({ nama: nama, kontak: kontak, kategori: kategori, pesan: pesan });
         form.reset();
         status.className = "ks-status berhasil";
-        status.textContent = "Terima kasih! Masukan kamu sudah kami terima.";
+        status.textContent = "Terima kasih, masukan Anda telah kami terima dan akan segera kami tindaklanjuti.";
         status.style.display = "";
       } catch (err) {
         status.className = "ks-status gagal";
-        status.textContent = "Gagal mengirim: " + err.message + " — coba lagi sebentar lagi.";
+        status.textContent = "Pengiriman masukan tidak berhasil (" + err.message + "). Silakan coba kembali beberapa saat lagi.";
         status.style.display = "";
       } finally {
         tombol.disabled = false;
