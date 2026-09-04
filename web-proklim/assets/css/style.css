@@ -167,21 +167,20 @@ li.buka > .submenu { display: block; }
   width: 44px; height: 44px; border-radius: 11px;
   font-size: 20px; cursor: pointer;
 }
-/* pil "sedang di halaman ini" — muncul di samping tombol hamburger supaya
-   warga tetap tahu sedang buka halaman apa walau menunya sudah diciutkan */
+/* kotak "sedang di halaman ini" — muncul di samping tombol hamburger supaya
+   warga tetap tahu sedang buka halaman apa walau menunya sudah diciutkan;
+   sengaja dibuat kotak & soft senada tombol menu di sampingnya, bukan pil
+   warna aksen, supaya tidak terlihat seperti tombol aksi/status "live" */
 .halaman-aktif-pil {
-  display: inline-flex; align-items: center; gap: 7px; min-width: 0;
-  padding: 8px 16px 8px 12px; border-radius: 999px;
-  background: var(--grad-aksen); color: #fff;
+  display: inline-flex; align-items: center; min-width: 0;
+  height: 44px; padding: 0 16px; border-radius: 11px;
+  background: var(--putih); color: var(--hijau-800);
   font-size: 13.5px; font-weight: 700;
-  box-shadow: 0 3px 10px rgba(15, 61, 36, .18);
+  border: 1px solid var(--garis);
+  box-shadow: 0 2px 8px rgba(15, 61, 36, .06);
   max-width: 42vw;
 }
 .halaman-aktif-nama { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.titik-aktif {
-  width: 7px; height: 7px; border-radius: 50%; background: #fff; flex-shrink: 0;
-  box-shadow: 0 0 0 3px rgba(255, 255, 255, .3);
-}
 /* layar sempit: nama situs + jargon + pil halaman + tombol menu sekaligus
    tidak muat berdampingan — jargon disembunyikan & nama boleh terpotong
    duluan (logo tetap utuh) supaya pil "sedang di halaman ini" tetap

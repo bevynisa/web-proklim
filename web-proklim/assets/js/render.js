@@ -120,7 +120,7 @@
           "</span>" +
         "</a>" +
         '<div class="status-nav-mobile">' +
-          (labelAktif ? '<span class="halaman-aktif-pil"><span class="titik-aktif"></span><span class="halaman-aktif-nama">' + esc(labelAktif) + "</span></span>" : "") +
+          (labelAktif ? '<span class="halaman-aktif-pil"><span class="halaman-aktif-nama">' + esc(labelAktif) + "</span></span>" : "") +
           '<button class="tombol-menu" id="tombol-menu" aria-label="Buka menu">☰</button>' +
         "</div>" +
         '<nav class="nav-utama" id="nav-utama"><ul class="nav-daftar">' + menu + "</ul></nav>" +
