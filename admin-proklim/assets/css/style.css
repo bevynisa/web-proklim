@@ -144,6 +144,24 @@ a { color: var(--biru-700); }
   align-items: center;
   margin-bottom: 4px;
 }
+.topbar-eyebrow {
+  display: block;
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--hijau-600);
+  margin-bottom: 3px;
+}
+.topbar-judul h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--biru-900);
+  padding-left: 14px;
+  border-left: 4px solid var(--hijau-600);
+  margin: 0;
+  line-height: 1.2;
+}
 /* ---------- daftar kategori (bagian dalam satu menu halaman) ---------- */
 .daftar-kategori { display: flex; flex-direction: column; gap: 8px; margin-top: 18px; max-width: 560px; }
 .kategori-item {
