@@ -1453,6 +1453,29 @@ table.tabel.kolom-akhir-lebar td:last-child, table.tabel.kolom-akhir-lebar th:la
 .pil:active { transform: translateY(0) scale(.96); }
 .pil.aktif { background: var(--hijau-700); border-color: var(--hijau-700); color: #fff; }
 
+/* Dropdown "lompat ke komponen" — muncul di bawah pil kategori supaya bisa
+   langsung loncat ke komponen tertentu tanpa gulir panjang; select native
+   (aksesibel & ramah HP) tapi digambar ulang tampilannya jadi kapsul hijau
+   senada situs, dengan panah kustom */
+.filter-komponen-wadah {
+  display: inline-flex; align-items: center; gap: 9px;
+  margin: -8px 0 20px; padding: 9px 16px 9px 14px;
+  background: var(--hijau-50); border: 1px solid var(--hijau-200); border-radius: 999px;
+}
+.filter-komponen-ikon { width: 17px; height: 17px; color: var(--hijau-700); flex-shrink: 0; }
+.filter-komponen {
+  appearance: none; -webkit-appearance: none; border: none; background: transparent;
+  color: var(--hijau-800); font-size: 14px; font-weight: 700; font-family: inherit;
+  cursor: pointer; padding-right: 22px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231b5e20' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right center; background-size: 15px;
+}
+.filter-komponen:focus-visible { outline: 2px solid var(--hijau-600); outline-offset: 3px; border-radius: 6px; }
+@media (max-width: 560px) {
+  .filter-komponen-wadah { width: 100%; box-sizing: border-box; }
+  .filter-komponen { flex: 1; }
+}
+
 .grid-galeri { display: grid; gap: 14px; justify-content: center; grid-template-columns: repeat(auto-fill, minmax(200px, 260px)); }
 .foto {
   margin: 0; position: relative; border-radius: var(--radius); overflow: hidden; cursor: pointer;

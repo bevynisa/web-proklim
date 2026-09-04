@@ -484,11 +484,13 @@
   }
 
   /* ---------------- GALERI: FILTER + LIGHTBOX ---------------- */
-  // tampilkan foto sesuai kategori — langsung tampil, tanpa animasi/jeda
-  function tampilkanGaleri(grid, kat) {
+  // tampilkan foto sesuai kategori (pil) + komponen (dropdown, opsional) —
+  // langsung tampil, tanpa animasi/jeda
+  function tampilkanGaleri(grid, kat, komponen) {
     grid.querySelectorAll(".galeri-kelompok").forEach(function (kel) {
-      var cocok = !kat || kel.getAttribute("data-kat") === kat;
-      kel.style.display = cocok ? "" : "none";
+      var cocokKat = !kat || kel.getAttribute("data-kat") === kat;
+      var cocokKomponen = !komponen || kel.getAttribute("data-judul") === komponen;
+      kel.style.display = (cocokKat && cocokKomponen) ? "" : "none";
     });
   }
 
@@ -496,7 +498,22 @@
     var grid = document.getElementById("grid-galeri");
     var gridVideo = document.getElementById("grid-galeri-video");
     var filter = document.getElementById("filter-galeri");
-    if (grid) tampilkanGaleri(grid, "");
+    var dropdownWadah = document.getElementById("filter-komponen-wadah");
+    var dropdown = document.getElementById("filter-komponen");
+    var petaKomponen = {};
+    try { petaKomponen = JSON.parse((dropdownWadah && dropdownWadah.getAttribute("data-map")) || "{}"); } catch (e) {}
+
+    function isiDropdown(kat) {
+      if (!dropdown) return;
+      var daftar = petaKomponen[kat || "__semua__"] || [];
+      var esc = Render.esc;
+      dropdown.innerHTML = '<option value="">Lompat ke komponen…</option>' +
+        daftar.map(function (d) {
+          return '<option value="' + esc(d.judul) + '">' + esc(d.judul) + " (" + d.jumlah + ")</option>";
+        }).join("");
+    }
+
+    if (grid) tampilkanGaleri(grid, "", "");
     if (filter) {
       filter.querySelectorAll(".pil").forEach(function (b) {
         b.onclick = function () {
@@ -506,9 +523,19 @@
           var pilihVideo = kat === "__video__";
           if (grid) grid.style.display = pilihVideo ? "none" : "";
           if (gridVideo) gridVideo.style.display = pilihVideo ? "" : "none";
-          if (!pilihVideo && grid) tampilkanGaleri(grid, kat);
+          if (dropdownWadah) dropdownWadah.style.display = pilihVideo ? "none" : "";
+          isiDropdown(pilihVideo ? "" : kat);
+          if (!pilihVideo && grid) tampilkanGaleri(grid, kat, "");
         };
       });
+    }
+    if (dropdown) {
+      isiDropdown("");
+      dropdown.onchange = function () {
+        var aktifBtn = filter ? filter.querySelector(".pil.aktif") : null;
+        var kat = aktifBtn ? aktifBtn.getAttribute("data-kat") : "";
+        if (grid) tampilkanGaleri(grid, kat, dropdown.value);
+      };
     }
     document.querySelectorAll(".foto").forEach(function (f) {
       f.onclick = function () { bukaLightbox(f); };

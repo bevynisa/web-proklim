@@ -1142,11 +1142,26 @@
       indeksKelompok[kunci].item.push({ g: g, i: i });
     });
 
+    // daftar komponen per kategori, dipakai buat isi dropdown "Lompat ke
+    // komponen" — supaya tidak perlu gulir panjang, tinggal loncat langsung
+    var komponenPerKategori = {};
+    kelompok.forEach(function (kel) {
+      if (!kel.judul) return;
+      var k = kel.kategori || "";
+      (komponenPerKategori[k] = komponenPerKategori[k] || []).push({ judul: kel.judul, jumlah: kel.item.length });
+      (komponenPerKategori["__semua__"] = komponenPerKategori["__semua__"] || []).push({ judul: kel.judul, jumlah: kel.item.length });
+    });
+    var dropdownKomponen =
+      '<div class="filter-komponen-wadah" id="filter-komponen-wadah" data-map="' + esc(JSON.stringify(komponenPerKategori)) + '" style="display:none">' +
+        '<svg class="filter-komponen-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>' +
+        '<select class="filter-komponen" id="filter-komponen"><option value="">Lompat ke komponen…</option></select>' +
+      "</div>";
+
     var gridFoto = !semua.length
       ? '<div class="kosong-galeri"><div class="ikon-kosong">🖼️</div><p>Belum ada foto. Tambahkan lewat halaman Admin.</p></div>'
       : '<div id="grid-galeri">' + kelompok.map(function (kel) {
           return (
-            '<div class="galeri-kelompok" data-kat="' + esc(kel.kategori || "") + '">' +
+            '<div class="galeri-kelompok" data-kat="' + esc(kel.kategori || "") + '" data-judul="' + esc(kel.judul || "") + '">' +
               (kel.judul ? '<h3 class="galeri-kelompok-judul">' + esc(kel.judul) + ' <span class="galeri-kelompok-jumlah">(' + kel.item.length + ")</span></h3>" : "") +
               '<div class="galeri-masonry">' + kel.item.map(function (p) { return selFoto(p.g, p.i); }).join("") + "</div>" +
             "</div>"
@@ -1158,7 +1173,7 @@
       : "";
 
     return (
-      '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) + pil + gridFoto + gridVideo + "</div></section>"
+      '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) + pil + dropdownKomponen + gridFoto + gridVideo + "</div></section>"
     );
   };
 
