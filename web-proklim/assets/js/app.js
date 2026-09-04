@@ -485,12 +485,12 @@
 
   /* ---------------- GALERI: FILTER + LIGHTBOX ---------------- */
   // tampilkan foto sesuai kategori (pil) + komponen (dropdown, opsional) —
-  // langsung tampil, tanpa animasi/jeda
+  // langsung tampil satu-satu, tanpa judul kelompok/tanpa animasi jeda
   function tampilkanGaleri(grid, kat, komponen) {
-    grid.querySelectorAll(".galeri-kelompok").forEach(function (kel) {
-      var cocokKat = !kat || kel.getAttribute("data-kat") === kat;
-      var cocokKomponen = !komponen || kel.getAttribute("data-judul") === komponen;
-      kel.style.display = (cocokKat && cocokKomponen) ? "" : "none";
+    grid.querySelectorAll(".foto").forEach(function (f) {
+      var cocokKat = !kat || f.getAttribute("data-kat") === kat;
+      var cocokKomponen = !komponen || f.getAttribute("data-judul") === komponen;
+      f.style.display = (cocokKat && cocokKomponen) ? "" : "none";
     });
   }
 
@@ -498,16 +498,15 @@
     var grid = document.getElementById("grid-galeri");
     var gridVideo = document.getElementById("grid-galeri-video");
     var filter = document.getElementById("filter-galeri");
-    var dropdownWadah = document.getElementById("filter-komponen-wadah");
     var dropdown = document.getElementById("filter-komponen");
     var petaKomponen = {};
-    try { petaKomponen = JSON.parse((dropdownWadah && dropdownWadah.getAttribute("data-map")) || "{}"); } catch (e) {}
+    try { petaKomponen = JSON.parse((dropdown && dropdown.getAttribute("data-map")) || "{}"); } catch (e) {}
 
     function isiDropdown(kat) {
       if (!dropdown) return;
       var daftar = petaKomponen[kat || "__semua__"] || [];
       var esc = Render.esc;
-      dropdown.innerHTML = '<option value="">Lompat ke komponen…</option>' +
+      dropdown.innerHTML = '<option value="">Semua Komponen</option>' +
         daftar.map(function (d) {
           return '<option value="' + esc(d.judul) + '">' + esc(d.judul) + " (" + d.jumlah + ")</option>";
         }).join("");
@@ -523,7 +522,7 @@
           var pilihVideo = kat === "__video__";
           if (grid) grid.style.display = pilihVideo ? "none" : "";
           if (gridVideo) gridVideo.style.display = pilihVideo ? "" : "none";
-          if (dropdownWadah) dropdownWadah.style.display = pilihVideo ? "none" : "";
+          if (dropdown) dropdown.style.display = pilihVideo ? "none" : "";
           isiDropdown(pilihVideo ? "" : kat);
           if (!pilihVideo && grid) tampilkanGaleri(grid, kat, "");
         };

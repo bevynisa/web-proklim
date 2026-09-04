@@ -1044,7 +1044,7 @@
 
   function selFoto(g, indeks) {
     return (
-      '<figure class="foto" data-foto="' + indeks + '" data-kat="' + esc(g.kategori || "") + '">' +
+      '<figure class="foto" data-foto="' + indeks + '" data-kat="' + esc(g.kategori || "") + '" data-judul="' + esc(g.judul || "") + '">' +
         '<img src="' + esc(g.file) + '" alt="' + esc(g.judul) + '" loading="lazy">' +
         (g.kategori ? '<span class="tanda">' + esc(g.kategori) + "</span>" : "") +
         '<figcaption class="keterangan">' + esc(g.judul) + "</figcaption>" +
@@ -1118,6 +1118,19 @@
         '<div class="ikon-kosong">🖼️</div><p>Galeri masih kosong. Tambahkan foto lewat halaman Admin.</p></div></div></section>';
     }
 
+    // hitung jumlah foto per komponen (field "judul", mis. "Peresapan Air")
+    // di tiap kategori — dipakai buat isi dropdown "Semua Komponen", supaya
+    // bisa langsung disaring ke komponen tertentu tanpa perlu gulir panjang
+    var komponenPerKategori = {};
+    semua.forEach(function (g) {
+      if (!g.judul) return;
+      [g.kategori || "", "__semua__"].forEach(function (k) {
+        var daftar = komponenPerKategori[k] = komponenPerKategori[k] || [];
+        var ada = daftar.filter(function (d) { return d.judul === g.judul; })[0];
+        if (ada) ada.jumlah++; else daftar.push({ judul: g.judul, jumlah: 1 });
+      });
+    });
+
     var kategori = S.kategoriGaleri();
     var pil =
       '<div class="filter-galeri" id="filter-galeri">' +
@@ -1127,53 +1140,19 @@
           return '<button class="pil" data-kat="' + esc(k) + '">' + esc(k) + " (" + n + ")</button>";
         }).join("") +
         (itemVideo.length ? '<button class="pil" data-kat="__video__">Video (' + itemVideo.length + ")</button>" : "") +
-      "</div>";
-
-    // dikelompokkan per komponen (field "judul", mis. "Peresapan Air") di dalam
-    // tiap kategori — bukan cuma ditumpuk rata dalam satu grid besar, supaya
-    // gampang cari foto berdasarkan komponen aksi tertentu
-    var kelompok = [], indeksKelompok = {};
-    semua.forEach(function (g, i) {
-      var kunci = (g.kategori || "") + "||" + (g.judul || "");
-      if (!indeksKelompok[kunci]) {
-        indeksKelompok[kunci] = { kategori: g.kategori, judul: g.judul, item: [] };
-        kelompok.push(indeksKelompok[kunci]);
-      }
-      indeksKelompok[kunci].item.push({ g: g, i: i });
-    });
-
-    // daftar komponen per kategori, dipakai buat isi dropdown "Lompat ke
-    // komponen" — supaya tidak perlu gulir panjang, tinggal loncat langsung
-    var komponenPerKategori = {};
-    kelompok.forEach(function (kel) {
-      if (!kel.judul) return;
-      var k = kel.kategori || "";
-      (komponenPerKategori[k] = komponenPerKategori[k] || []).push({ judul: kel.judul, jumlah: kel.item.length });
-      (komponenPerKategori["__semua__"] = komponenPerKategori["__semua__"] || []).push({ judul: kel.judul, jumlah: kel.item.length });
-    });
-    var dropdownKomponen =
-      '<div class="filter-komponen-wadah" id="filter-komponen-wadah" data-map="' + esc(JSON.stringify(komponenPerKategori)) + '" style="display:none">' +
-        '<svg class="filter-komponen-ikon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M7 12h10M10 18h4"/></svg>' +
-        '<select class="filter-komponen" id="filter-komponen"><option value="">Lompat ke komponen…</option></select>' +
+        '<select class="filter-komponen" id="filter-komponen" data-map="' + esc(JSON.stringify(komponenPerKategori)) + '"><option value="">Semua Komponen</option></select>' +
       "</div>";
 
     var gridFoto = !semua.length
       ? '<div class="kosong-galeri"><div class="ikon-kosong">🖼️</div><p>Belum ada foto. Tambahkan lewat halaman Admin.</p></div>'
-      : '<div id="grid-galeri">' + kelompok.map(function (kel) {
-          return (
-            '<div class="galeri-kelompok" data-kat="' + esc(kel.kategori || "") + '" data-judul="' + esc(kel.judul || "") + '">' +
-              (kel.judul ? '<h3 class="galeri-kelompok-judul">' + esc(kel.judul) + ' <span class="galeri-kelompok-jumlah">(' + kel.item.length + ")</span></h3>" : "") +
-              '<div class="galeri-masonry">' + kel.item.map(function (p) { return selFoto(p.g, p.i); }).join("") + "</div>" +
-            "</div>"
-          );
-        }).join("") + "</div>";
+      : '<div class="galeri-masonry" id="grid-galeri">' + semua.map(function (g, i) { return selFoto(g, i); }).join("") + "</div>";
 
     var gridVideo = itemVideo.length
       ? '<div class="grid-video" id="grid-galeri-video" style="display:none">' + itemVideo.map(kartuVideo).join("") + "</div>"
       : "";
 
     return (
-      '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) + pil + dropdownKomponen + gridFoto + gridVideo + "</div></section>"
+      '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) + pil + gridFoto + gridVideo + "</div></section>"
     );
   };
 

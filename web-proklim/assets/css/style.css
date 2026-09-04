@@ -1453,27 +1453,25 @@ table.tabel.kolom-akhir-lebar td:last-child, table.tabel.kolom-akhir-lebar th:la
 .pil:active { transform: translateY(0) scale(.96); }
 .pil.aktif { background: var(--hijau-700); border-color: var(--hijau-700); color: #fff; }
 
-/* Dropdown "lompat ke komponen" — muncul di bawah pil kategori supaya bisa
-   langsung loncat ke komponen tertentu tanpa gulir panjang; select native
-   (aksesibel & ramah HP) tapi digambar ulang tampilannya jadi kapsul hijau
-   senada situs, dengan panah kustom */
-.filter-komponen-wadah {
-  display: inline-flex; align-items: center; gap: 9px;
-  margin: -8px 0 20px; padding: 9px 16px 9px 14px;
-  background: var(--hijau-50); border: 1px solid var(--hijau-200); border-radius: 999px;
-}
-.filter-komponen-ikon { width: 17px; height: 17px; color: var(--hijau-700); flex-shrink: 0; }
+/* Dropdown komponen — duduk di baris yang sama dengan pil kategori (bukan
+   kotak terpisah di bawahnya), didorong ke kanan supaya jelas perannya beda:
+   pil = kategori besar, dropdown = penyaring komponen di dalamnya. Select
+   native (aksesibel & ramah HP), cuma digambar ulang tampilannya senada pil
+   di sampingnya dengan panah kustom */
 .filter-komponen {
-  appearance: none; -webkit-appearance: none; border: none; background: transparent;
-  color: var(--hijau-800); font-size: 14px; font-weight: 700; font-family: inherit;
-  cursor: pointer; padding-right: 22px;
+  appearance: none; -webkit-appearance: none; cursor: pointer;
+  border: 1px solid var(--hijau-200); background: var(--hijau-50); color: var(--hijau-800);
+  padding: 8px 30px 8px 16px; border-radius: 999px;
+  font-size: 14px; font-weight: 600; font-family: inherit;
+  margin-left: auto; max-width: 100%;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231b5e20' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat; background-position: right center; background-size: 15px;
+  background-repeat: no-repeat; background-position: right 12px center; background-size: 14px;
+  transition: border-color .2s ease, box-shadow .2s ease;
 }
-.filter-komponen:focus-visible { outline: 2px solid var(--hijau-600); outline-offset: 3px; border-radius: 6px; }
+.filter-komponen:hover { border-color: var(--hijau-600); box-shadow: var(--bayang); }
+.filter-komponen:focus-visible { outline: 2px solid var(--hijau-600); outline-offset: 2px; }
 @media (max-width: 560px) {
-  .filter-komponen-wadah { width: 100%; box-sizing: border-box; }
-  .filter-komponen { flex: 1; }
+  .filter-komponen { margin-left: 0; width: 100%; box-sizing: border-box; }
 }
 
 .grid-galeri { display: grid; gap: 14px; justify-content: center; grid-template-columns: repeat(auto-fill, minmax(200px, 260px)); }
@@ -1502,20 +1500,6 @@ table.tabel.kolom-akhir-lebar td:last-child, table.tabel.kolom-akhir-lebar th:la
   background: var(--putih); border: 2px dashed var(--garis); border-radius: var(--radius);
 }
 .kosong-galeri .ikon-kosong { font-size: 44px; opacity: .45; margin-bottom: 10px; }
-
-/* Galeri lengkap — dikelompokkan per komponen aksi, tiap kelompok punya judul
-   kecil sendiri sebelum grid mosaik fotonya */
-.galeri-kelompok { margin-bottom: 34px; }
-.galeri-kelompok:last-child { margin-bottom: 0; }
-.galeri-kelompok-judul {
-  display: flex; align-items: center; gap: 9px;
-  font-size: 16px; font-weight: 800; color: var(--hijau-900); margin: 0 0 14px;
-}
-.galeri-kelompok-judul::before {
-  content: ""; width: 4px; height: 18px; border-radius: 3px;
-  background: linear-gradient(var(--teal-500), var(--hijau-700)); flex-shrink: 0;
-}
-.galeri-kelompok-jumlah { font-weight: 600; color: var(--teks-lembut); font-size: 13.5px; }
 
 /* Galeri lengkap — tata letak mosaik dinamis (sebagian tile lebih tinggi) */
 .galeri-masonry {
