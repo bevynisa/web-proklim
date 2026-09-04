@@ -1079,6 +1079,7 @@ table.tabel.kolom-akhir-lebar td:last-child, table.tabel.kolom-akhir-lebar th:la
 .vbar-label {
   margin-top: 9px; font-size: 12.5px; font-weight: 700; color: var(--teks);
   text-align: center; line-height: 1.3;
+  width: 100%; overflow-wrap: break-word; box-sizing: border-box;
 }
 @media (max-width: 640px) {
   .vbar-sumbu-y, .vbar-grid, .vbar-bungkus { height: 130px; }
@@ -1087,7 +1088,8 @@ table.tabel.kolom-akhir-lebar td:last-child, table.tabel.kolom-akhir-lebar th:la
   .vbar-grup { gap: 6px; }
   .vbar-chart { gap: 16px; }
   .vbar-kartu-rapat .vbar-chart { gap: 8px; }
-  .vbar-kartu-rapat .vbar-kolom { width: 52px; }
+  .vbar-kartu-rapat .vbar-kolom { width: 62px; }
+  .vbar-label { font-size: 11px; }
 }
 
 /* kartu tooltip melayang saat hover/tap batang */
