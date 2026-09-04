@@ -1088,8 +1088,12 @@ table.tabel.kolom-akhir-lebar td:last-child, table.tabel.kolom-akhir-lebar th:la
   .vbar-grup { gap: 6px; }
   .vbar-chart { gap: 16px; }
   .vbar-kartu-rapat .vbar-chart { gap: 8px; }
-  .vbar-kartu-rapat .vbar-kolom { width: 62px; }
+  .vbar-kartu-rapat .vbar-kolom { width: 80px; }
   .vbar-label { font-size: 11px; }
+  /* grafik 1 seri (label = nama bulan, mis. "September") — kolom sudah
+     dilebarkan pas buat muat 1 baris, supaya rapi sejajar dengan bulan lain
+     yang lebih pendek, bukan cuma yang ini doang yang turun ke 2 baris */
+  .vbar-kartu-rapat .vbar-label { white-space: nowrap; }
 }
 
 /* kartu tooltip melayang saat hover/tap batang */
