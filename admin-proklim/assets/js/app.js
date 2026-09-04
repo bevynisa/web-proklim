@@ -33,12 +33,37 @@
     });
   }
 
+  /* unggah dokumen (PDF lampiran) — sama caranya dengan gambar, tapi
+     ditaruh di bucket terpisah ("dokumen-situs") dan pratinjaunya
+     berupa tautan "Lihat dokumen", bukan gambar */
+  function pasangUnggahDokumenGlobal() {
+    document.addEventListener("change", async function (e) {
+      var input = e.target.closest && e.target.closest('input[type=file][data-docfor]');
+      if (!input || !input.files || !input.files[0]) return;
+      var idTujuan = input.dataset.docfor;
+      var hidden = document.getElementById(idTujuan);
+      var pratinjau = document.getElementById(idTujuan + "-pratinjau");
+      input.disabled = true;
+      try {
+        var url = await Store.uploadGambar(input.files[0], "dokumen-situs");
+        if (hidden) hidden.value = url;
+        if (pratinjau) { pratinjau.href = url; pratinjau.style.display = ""; pratinjau.textContent = "📄 Lihat dokumen yang baru diunggah"; }
+        UI.pesan("Dokumen berhasil diunggah.", true);
+      } catch (err) {
+        UI.pesan("Gagal mengunggah dokumen: " + err.message, false);
+      } finally {
+        input.disabled = false;
+      }
+    });
+  }
+
   async function mulai() {
     var masuk = await Auth.sedangMasuk();
     if (!masuk) { window.location.href = "/login"; return; }
 
     bangunSidebar();
     pasangUnggahGambarGlobal();
+    pasangUnggahDokumenGlobal();
     UI.pasangRepeaterGlobal();
 
     document.getElementById("btn-keluar").onclick = function () { Auth.keluar(); };

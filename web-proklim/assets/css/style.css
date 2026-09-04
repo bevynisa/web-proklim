@@ -538,6 +538,15 @@ a.kartu:hover { transform: translateY(-3px); box-shadow: var(--bayang-kuat); }
 .rencana-target { background: var(--hijau-50); color: var(--hijau-800); border-color: var(--hijau-200); }
 .rencana-target b { background: var(--hijau-800); }
 .rencana-pj { background: #EFF8EE; color: var(--hijau-600); border-color: #CDE9CC; }
+.rencana-lampiran { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; padding-top: 12px; border-top: 1px dashed var(--garis); }
+.rencana-lampiran-tautan {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 700;
+  padding: 6px 12px; border-radius: 999px; border: 1px solid var(--hijau-200);
+  background: var(--hijau-50); color: var(--hijau-800); text-decoration: none;
+  transition: background .15s, border-color .15s;
+}
+.rencana-lampiran-tautan svg { width: 14px; height: 14px; flex-shrink: 0; }
+.rencana-lampiran-tautan:hover { background: var(--hijau-100); border-color: var(--hijau-500); }
 .rencana-pj b { background: var(--hijau-600); }
 @media (max-width: 980px) {
   .rencana-daftar { grid-template-columns: repeat(2, 1fr); }

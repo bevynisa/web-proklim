@@ -48,6 +48,9 @@
   var IKON_EMAIL_SVG =
     '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
     '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>';
+  var IKON_PDF_SVG =
+    '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' +
+    '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>';
 
   // "0858..." atau "+62858..." -> "62858..." (format yang dipakai tautan wa.me)
   function teleponWa(t) {
@@ -330,6 +333,9 @@
     if (!item.length) return "";
     var kartu = item.map(function (i, idx) {
       var nomor = (idx + 1 < 10 ? "0" : "") + (idx + 1);
+      var lampiran = [];
+      if (i.lampiran1Url) lampiran.push({ label: i.lampiran1Label || "Lihat Dokumen", url: i.lampiran1Url });
+      if (i.lampiran2Url) lampiran.push({ label: i.lampiran2Label || "Lihat Dokumen", url: i.lampiran2Url });
       return (
         '<div class="rencana-item efek-sorot">' +
           '<div class="rencana-atas">' +
@@ -343,6 +349,11 @@
                 (i.target ? '<span class="rencana-tag rencana-target"><b>Target</b>' + esc(i.target) + "</span>" : "") +
                 (i.pj ? '<span class="rencana-tag rencana-pj"><b>PJ</b>' + esc(i.pj) + "</span>" : "") +
               "</div>"
+            : "") +
+          (lampiran.length
+            ? '<div class="rencana-lampiran">' + lampiran.map(function (l) {
+                return '<a class="rencana-lampiran-tautan" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + IKON_PDF_SVG + esc(l.label) + "</a>";
+              }).join("") + "</div>"
             : "") +
         "</div>"
       );

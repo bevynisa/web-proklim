@@ -95,6 +95,17 @@
       }).join("");
       return '<select data-k="' + kolom.key + '"><option value="">-</option>' + opsi + "</select>";
     }
+    if (kolom.tipe === "dokumen") {
+      var idDoc = idUnik("doc");
+      return (
+        '<div class="sel-dokumen">' +
+        '<a id="' + idDoc + '-pratinjau" href="' + esc(nilaiSekarang) + '" target="_blank" rel="noopener"' +
+          (nilaiSekarang ? "" : ' style="display:none"') + '>📄 Lihat dokumen</a>' +
+        '<input type="file" accept="application/pdf" data-docfor="' + idDoc + '">' +
+        '<input type="hidden" data-k="' + kolom.key + '" id="' + idDoc + '" value="' + esc(nilaiSekarang) + '">' +
+        "</div>"
+      );
+    }
     if (kolom.tipe === "gambar") {
       var idImg = idUnik("img");
       return (

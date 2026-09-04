@@ -127,11 +127,13 @@
   var KOLOM_RENCANA = [
     { key: "judul", label: "Judul" }, { key: "teks", label: "Penjelasan", tipe: "textarea" },
     { key: "target", label: "Target (boleh kosong)" }, { key: "pj", label: "Penanggung Jawab (boleh kosong)" },
+    { key: "lampiran1Label", label: "Nama Lampiran 1 (boleh kosong)" }, { key: "lampiran1Url", label: "Dokumen Lampiran 1 (PDF)", tipe: "dokumen" },
+    { key: "lampiran2Label", label: "Nama Lampiran 2 (boleh kosong)" }, { key: "lampiran2Url", label: "Dokumen Lampiran 2 (PDF)", tipe: "dokumen" },
   ];
   function renderC(kunci, k) {
     var id = idBlok(kunci, "item");
     return fTeks(kunci, "judul", "Judul Bagian", k.judul, "Judul yang tampil di atas bagian ini.") +
-      UI.repeaterFlat(id, "Daftar Rencana Kerja", "Satu kartu untuk satu rencana kerja.", k.item, KOLOM_RENCANA, "Rencana Kerja");
+      UI.repeaterFlat(id, "Daftar Rencana Kerja", 'Satu kartu untuk satu rencana kerja. Kolom "Lampiran" boleh dikosongkan — isi kalau ada dokumen pendukung (PDF) yang mau ditautkan, contoh: SK, AD/ART, atau Program Kerja. Boleh sampai 2 dokumen per kartu.', k.item, KOLOM_RENCANA, "Rencana Kerja");
   }
   function bacaC(kunci, k) {
     var h = JSON.parse(JSON.stringify(k));
