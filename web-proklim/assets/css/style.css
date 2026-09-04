@@ -971,6 +971,10 @@ table.tabel td.kelompok {
   border-top: 2px solid var(--hijau-100); white-space: normal;
 }
 table.tabel.polos td:last-child { white-space: normal; font-weight: 500; color: inherit; }
+/* kolom terakhir dilebarkan (mis. "Manfaat" di tabel Data Aksi) — tabel jadi
+   boleh melebihi lebar wadah dan discroll ke samping (lihat .bungkus-tabel),
+   supaya teks panjangnya tidak memaksa baris jadi sangat tinggi ke bawah */
+table.tabel.kolom-akhir-lebar td:last-child, table.tabel.kolom-akhir-lebar th:last-child { min-width: 340px; }
 
 /* Peringkat — pengganti tabel skor/ranking (bar horizontal berwarna) */
 .kartu-putih.peringkat-daftar, .kartu-putih.ganda-daftar { padding: 16px 18px; }

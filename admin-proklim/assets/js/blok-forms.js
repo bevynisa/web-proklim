@@ -233,6 +233,7 @@
       return obj;
     });
     var idTeks = idBlok(kunci, "kolomPertamaTeks");
+    var idLebar = idBlok(kunci, "kolomTerakhirLebar");
     return (
       fTeks(kunci, "judul", "Judul Bagian", k.judul, "Judul yang tampil di atas tabel ini.") +
       (k.deskripsi !== undefined ? fArea(kunci, "deskripsi", "Deskripsi Singkat", k.deskripsi, "Penjelasan di bawah judul (boleh dikosongkan).", 60) : "") +
@@ -241,6 +242,8 @@
         "Kalau menambah/mengurangi kolom di sini, klik Simpan Perubahan dulu, baru buka lagi bagian ini supaya isian baris di bawah ikut menyesuaikan.", 60) +
       '<div class="field"><label><input type="checkbox" id="' + idTeks + '"' + (k.kolomPertamaTeks ? " checked" : "") + '> Kolom pertama berisi kalimat, bukan nomor urut</label>' +
       '<p class="hint">Centang kalau isi kolom pertama berupa kalimat (misal "Ancaman", "Kegiatan") supaya rata kiri. Biarkan kosong kalau kolom pertama nomor urut seperti "No" (biar tetap rata tengah).</p></div>' +
+      '<div class="field"><label><input type="checkbox" id="' + idLebar + '"' + (k.kolomTerakhirLebar ? " checked" : "") + '> Beri ruang lebih lebar untuk kolom terakhir</label>' +
+      '<p class="hint">Centang kalau isi kolom terakhir berupa kalimat panjang (misal "Manfaat") supaya tidak terlalu banyak baris ke bawah — tabel jadi boleh discroll ke samping.</p></div>' +
       UI.repeaterFlat(id, "Daftar Baris Data", "Satu baris untuk satu kegiatan/data.", itemUntukForm, kolomRepeater, "Baris")
     );
   }
@@ -250,6 +253,7 @@
     if (h.deskripsi !== undefined) h.deskripsi = nilaiId(idBlok(kunci, "deskripsi"));
     h.kolom = nilaiId(idBlok(kunci, "kolom")).split("|").map(function (s) { return s.trim(); }).filter(Boolean);
     h.kolomPertamaTeks = UI.checked(idBlok(kunci, "kolomPertamaTeks"));
+    h.kolomTerakhirLebar = UI.checked(idBlok(kunci, "kolomTerakhirLebar"));
     var barisObj = UI.bacaRepeaterFlat(idBlok(kunci, "baris"));
     h.baris = barisObj.map(function (obj) {
       return h.kolom.map(function (_, i) { return obj["c" + i] || ""; });

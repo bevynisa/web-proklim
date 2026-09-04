@@ -667,9 +667,14 @@
     // kolom pertama biasanya nomor urut (rata tengah, sempit) — tapi kalau
     // isinya kalimat panjang (mis. "Ancaman"), biar rata kiri seperti kolom lain
     var kolom1Teks = !!b.kolomPertamaTeks;
+    // kolom terakhir yang isinya kalimat panjang (mis. "Manfaat") dibuat
+    // lebih lebar supaya teksnya tidak terlalu banyak baris ke bawah —
+    // tabelnya jadi boleh discroll ke samping kalau perlu, ganti banyak
+    // scroll ke bawah dengan sedikit scroll ke samping
+    var kolomAkhirLebar = !!b.kolomTerakhirLebar;
     return (
       '<section class="seksi"><div class="wadah">' + kepalaSeksi(b) +
-      '<div class="bungkus-tabel' + (ringkas ? " bungkus-tabel-ringkas" : "") + '"><table class="tabel polos' + (kolom1Teks ? " kolom1-teks" : "") + '">' +
+      '<div class="bungkus-tabel' + (ringkas ? " bungkus-tabel-ringkas" : "") + '"><table class="tabel polos' + (kolom1Teks ? " kolom1-teks" : "") + (kolomAkhirLebar ? " kolom-akhir-lebar" : "") + '">' +
         "<thead><tr>" + kolom.map(function (k) { return "<th>" + esc(k) + "</th>"; }).join("") + "</tr></thead>" +
         "<tbody>" + isi + "</tbody></table></div>" +
       "</div></section>"
