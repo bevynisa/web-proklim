@@ -462,9 +462,9 @@
   }
 
   var PEMETAAN = {
-    "checklist": [renderA, bacaA], "kartu-program": [renderA, bacaA], "profil-grid": [renderA, bacaA],
+    "checklist": [renderA, bacaA], "kartu-program": [renderA, bacaA],
     "arah-alur": [renderA, bacaA], "manfaat-pita": [renderA, bacaA], "rute-jejaring": [renderA, bacaA],
-    "profil": [renderB, bacaB], "foto-kartu": [renderB, bacaB],
+    "profil": [renderB, bacaB], "foto-kartu": [renderB, bacaB], "profil-grid": [renderB, bacaB],
     "rencana-kerja": [renderC, bacaC],
     "statistik": [renderD, bacaD],
     "kartu": [renderE, bacaE],
